@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assigned_Exam__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Assigned Exam</label>
+    <referenceTo>Assigned_Exam__c</referenceTo>
+    <relationshipLabel>Assigned Exams Junction Questions</relationshipLabel>
+    <relationshipName>Assigned_Exams_Junction_Questions</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>
