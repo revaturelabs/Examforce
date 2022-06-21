@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
+<template>
     <div class="container">
         <div class="timer card">
             <div>Exam Name</div>
@@ -16,7 +7,7 @@
         <div class="questionBody card">
             <div class="qTitle">
                 <div>Question 5 of 65:</div>
-                <div id="review">Mark for Review</div>
+                <div class="reviewButton">Mark for Review</div>
             </div>
             <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
                 Cumque explicabo soluta nostrum minima ab ex asperiores 
@@ -53,12 +44,12 @@
             <div class="q4 card">D: Question</div>
         </div>
         <div class="buttons">
-            <div id="flag">Flag</div>
+            <div class="flag">Flag</div>
             <div class="controls"> 
-                <div id="control">
+                <div class="control">
                     Previous
                 </div>
-                <div id="control">
+                <div class="control">
                     Next
                 </div>
             </div>
@@ -149,8 +140,7 @@
                 <div class="flagged keyItem">&nbsp;</div>Flagged
 
             </div>
-            <div id="submit" class="keyItem">Submit Exam</div>
+            <div class="submit keyItem">Submit Exam</div>
         </div>
     </div>
-</body>
-</html>
+</template>
