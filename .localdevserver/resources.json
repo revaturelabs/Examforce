@@ -1,0 +1,13 @@
+{
+    "79b787e3fd": {
+        "component://@webruntime/app@en-US": {
+            "dev": "944e0d91f0"
+        },
+        "component://localdevserver/preview@en-US": {
+            "dev": "d8da1a15eb"
+        },
+        "component://c/trueFalseQuestion@en-US": {
+            "dev": "5b14f9ac39"
+        }
+    }
+}
