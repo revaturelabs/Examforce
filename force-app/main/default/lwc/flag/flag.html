@@ -1,0 +1,25 @@
+<template>
+    <lightning-card variant="narrow" icon-name="Flagged">
+        <h1 slot="title">Conditional Rendering</h1>
+ 
+        <!-- Button to toggle our attribute-->
+        <lightning-button 
+            variant="brand" 
+            label="This question has been Flagged" 
+            title="Flagged" 
+            onclick={handleClick} 
+            class="Flagged__c"
+        >
+ 
+        </lightning-button>
+        
+        <!-- Check if displayDetails attribute is true-->
+        <template if:true={displayDetails}>
+            <!-- If attribute is true display extra details-->
+            <div class="slds-align_absolute-center">
+                Flagged!
+            </div>
+        </template>
+ 
+    </lightning-card>
+</template>
