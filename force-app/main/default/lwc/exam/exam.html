@@ -1,0 +1,22 @@
+<template>
+    <div class="container">
+    <!-- Timer and Title Component -->
+    <!-- <c-timer></c-timer>  -->
+    <!-- Question Body  -->
+    <div class="questionBody card">
+        <div class="qTitle">
+            <div>Question {currentQuestion} of {ExamLength}:</div>
+            <div class="reviewButton">Mark for Review</div>
+        </div>
+        <div>{questionBody}</div>
+    </div>
+    <!-- Question answer section 
+    Will need to be adjusted due to correct question type
+    multi select question as placeholder -->
+    <c-multipleChoice value={questionData} ></c-multipleChoice>
+    <!-- Flag / next / previous controls -->
+    <!-- <c-controls></c-controls> -->
+    <!-- Question Navigation/Display/Key/Submit -->
+    <!-- <c-question-nav></c-question-nav> -->
+    </div>
+</template>
