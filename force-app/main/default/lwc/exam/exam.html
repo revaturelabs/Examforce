@@ -1,0 +1,50 @@
+<template>
+    <div class="container">
+    <!-- Timer and Title Component -->
+    <c-timer></c-timer> 
+    <!-- Question Body  -->
+    <div class="questionBody card">
+        <div class="qTitle">
+            <div>Question {currentQuestion} of {ExamLength}:</div>
+            <lightning-button variant="base" label="Mark for Review" title="Mark for Review" onclick={handleClick} class="reviewButton"></lightning-button>
+            <!-- <div class="reviewButton">Mark for Review</div> -->
+        </div>
+        <div>
+            {questionBody}
+        </div>
+    </div>
+    <!-- Question answer section 
+    Will need to be adjusted due to correct question type
+    multi select question as placeholder -->
+    <c-multipleChoice value={questionData}></c-multipleChoice>
+    <!-- Flag / next / previous controls -->
+    <div class="buttons">
+        <lightning-button variant="base" label="Flag" title="Flag" onclick={handleClick} class="flag"></lightning-button>
+        <!-- <div class="flag">Flag</div> -->
+        <div class="controls"> 
+            <lightning-button variant="base" label="Previous" title="Previous" onclick={previous} class="control"></lightning-button>
+            <lightning-button variant="base" label="Next" title="Next" onclick={next} class="control"></lightning-button>
+        </div>
+    </div>
+    <!-- Question Navigation/Display/Key/Submit -->
+    <div class="questionDisplay card">
+        <div class="list" lwc:dom="manual">
+            <!-- 
+            <div class="answered q">1</div>
+            <div class="answered q">2</div>
+            <div class="review q">3</div>
+            <div class="flagged q">4</div>
+            <div class="q">5</div> 
+            -->
+        </div>
+
+        <div class="key">
+            <div class="answered keyItem"> &nbsp;</div>Answered
+            <div class="unanswered keyItem">&nbsp;</div>Unanswered
+            <div class="review keyItem">&nbsp;</div>Review
+            <div class="flagged keyItem">&nbsp;</div>Flagged
+        </div>
+        <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={submitExam} class="submit keyItem"></lightning-button>
+    </div>
+    </div>
+</template>
