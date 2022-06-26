@@ -7,8 +7,22 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
 */
 import { LightningElement, wire, api } from 'lwc';
 import getfetchExam from '@salesforce/apex/fetchExam.fetchExam';
+import EmailPreferencesStayInTouchReminder from '@salesforce/schema/User.EmailPreferencesStayInTouchReminder';
 
 export default class Exam extends LightningElement {
+    questionArray = [];
+    // answered = [correct, picked, stat];
+    // answer = {correct: 'c', picked: empty , }
+    //pciekd answer
+    //correct answer
+    // answered.forEach(element => {
+    //     total score = this.examData.length
+    //     [0]==[1] = correct answered
+    //     totalscore++ 
+
+
+    // });
+
     //Exam info to store data from the apex class that does a SOQL to get the questions
     Examinfo;
     //Question Data holds question possible answers
@@ -29,6 +43,8 @@ export default class Exam extends LightningElement {
             this.Examinfo = data;
             this.ExamLength = data.length;
             this.examData();
+            this.createAnswer(this.Examinfo, this.ExamLength);
+            console.log(data);
             //console.log(this.questionData);
         } else if (error){
             console.log(error);
@@ -53,18 +69,12 @@ export default class Exam extends LightningElement {
     //next button to navigate through questions
     previous() {
         if(this.currentQuestion == 1){
-            //submit function
+            //do nothing
         } else {
             this.position = this.position - 1;
             this.currentQuestion = this.currentQuestion - 1;
             this.examData();
         }
-    }
-    navControl() {
-        console.log('clicked');
-        // this.position = i;
-        // this.currentQuestion = i + 1;
-        // this.examData();
     }
     questionNav(){
         const nav = this.template.querySelector('.list');
@@ -73,6 +83,7 @@ export default class Exam extends LightningElement {
             let div = document.createElement('lightning-button');
             div.classList.add('navButton');
             div.title = (i+1);
+            
             div.innerText = div.title;
             div.onclick = () => {
                 this.position = i;
@@ -85,6 +96,29 @@ export default class Exam extends LightningElement {
             nav.appendChild(div);
         }
     };
+    ExamQuestion(questionNum, correct, picked, stat){
+        return {
+            questionNum,
+            correct,
+            picked,
+            stat       }
+    }
+    createAnswer(examInfo, length) {
+        for(let i=0;i<length;i++){
+            console.log('works');
+            let questionNum= (i+1);
+            let correct = examInfo[i].Correct_Answer__c;
+            let picked = null;
+            let stat = 'unanswered';
+            let question = this.ExamQuestion(questionNum, correct, picked, stat);
+            this.questionArray.push(question);
+        }
+
+        console.log(this.questionArray[0].questionNum);
+        console.log(this.questionArray[0].correct);
+        console.log(this.questionArray[0].picked);
+        console.log(this.questionArray[0].stat);
+    }
     renderedCallback() {
         this.questionNav();
     }
