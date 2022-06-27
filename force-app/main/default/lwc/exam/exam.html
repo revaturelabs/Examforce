@@ -6,7 +6,7 @@
     <div class="questionBody card">
         <div class="qTitle">
             <div>Question {currentQuestion} of {ExamLength}:</div>
-            <lightning-button variant="base" label="Mark for Review" title="Mark for Review" onclick={handleClick} class="reviewButton"></lightning-button>
+            <lightning-button variant="base" label="Mark for Review" title="Mark for Review" onclick={markForReview} class="reviewButton"></lightning-button>
             <!-- <div class="reviewButton">Mark for Review</div> -->
         </div>
         <div>
@@ -16,7 +16,21 @@
     <!-- Question answer section 
     Will need to be adjusted due to correct question type
     multi select question as placeholder -->
-    <c-multipleChoice value={questionData}></c-multipleChoice>
+
+    <!-- <c-multipleChoice value={questionData}></c-multipleChoice> -->
+
+    <template if:true={multipleChoice}>
+        <div class="card">
+            <lightning-radio-group name="radioGroup"
+                              label="Choose the Best Answer"
+                              options={options}
+                              value={userAnswer}
+                              onchange={setAnswer}
+                              type="radio"></lightning-radio-group>
+        </div>
+    </template>
+
+
     <!-- Flag / next / previous controls -->
     <div class="buttons">
         <lightning-button variant="base" label="Flag" title="Flag" onclick={handleClick} class="flag"></lightning-button>
