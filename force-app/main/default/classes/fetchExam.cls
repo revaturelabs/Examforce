@@ -1,11 +1,11 @@
 public class fetchExam {
     @AuraEnabled(cacheable=true)
-    public static List<Question__c> fetchExam(String q){
+    public static List<Question_Pool__c> fetchExam(String q){
         try { //WHERE Name will be a variable that links the users assigned exam
             
            //List<Assigned_Exam__c> assignedExam = [SELECT Exam__r.Id FROM Assigned_Exam__c WHERE name = 'AE-0000'];
 
-           return [SELECT Id, Name, Active__c, Answer_A__c, Answer_B__c, Answer_C__c, Answer_D__c, Body__c, Correct_Answer__c,Type__c,(SELECT Id from Question_Pools__r WHERE Exam__r.ID =: q) FROM Question__c];
+           return [SELECT Question__r.Id, Question__r.Name, Question__r.Body__c, Question__r.Answer_A__c, Question__r.Answer_B__c, Question__r.Answer_C__c, Question__r.Answer_D__c, Question__r.Correct_Answer__c, Question__r.Type__c FROM Question_Pool__c WHERE Exam__r.ID =: q];
            
 
         } catch (Exception e) {
