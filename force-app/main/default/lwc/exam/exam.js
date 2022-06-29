@@ -10,6 +10,7 @@ import getfetchExam from '@salesforce/apex/fetchExam.fetchExam';
 import examDuration from '@salesforce/apex/examDuration.examDuration';
 
 export default class Exam extends LightningElement {
+    @api examId;
     questionArray = [];
 
     //Exam info to store data from the apex class that does a SOQL(fetchExam) to get the questions
@@ -39,6 +40,8 @@ export default class Exam extends LightningElement {
 
     @wire(examDuration)
     //handleExam will handle the data or exam assigned
+
+    
     handleDuration({error, data}){
         if(data){
             this.ExamTime = data[0].Exam__r.Duration__c;
@@ -49,7 +52,8 @@ export default class Exam extends LightningElement {
         } 
     }
     //wire for apex
-    @wire(getfetchExam)
+    // @wire(getfetchExam)
+    @wire(getfetchExam,{q : '$examId'})
     //handleExam will handle the data or exam assigned
     handleExam({error, data}){
         if(data){
