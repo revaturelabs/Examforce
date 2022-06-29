@@ -132,3 +132,34 @@
     text-align: center;
     align-self: flex-end;
 }
+.dimmer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0, 0.2);
+}
+.popUp {
+    position: absolute;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.popup ul {
+    text-align: center;
+}
+.popUp .submit {
+    align-self: center;
+}
+.submitControls {
+    display: flex;
+    gap: 20px;
+}

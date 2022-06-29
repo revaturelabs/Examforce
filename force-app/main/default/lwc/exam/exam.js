@@ -5,29 +5,49 @@ Date Created: 06/22/22
 Last Modified: 06/25/22
 Description: To be rendered when AssignedExam is clicked, display questions associted with assigned exam
 */
-import { LightningElement, wire, api, track } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import getfetchExam from '@salesforce/apex/fetchExam.fetchExam';
+import examDuration from '@salesforce/apex/examDuration.examDuration';
 
 export default class Exam extends LightningElement {
     questionArray = [];
 
-    //Exam info to store data from the apex class that does a SOQL to get the questions
+    //Exam info to store data from the apex class that does a SOQL(fetchExam) to get the questions
     Examinfo;
     //Question Data holds question possible answers
-    questionData;
     //Question body is the body of the current question
+    questionData;
     questionBody;
     //postion is the position in the current array of questions this referes to position 0 as the start
-    position = 0;
     //current questions is the position that will display on the exam
-    currentQuestion = (this.position + 1);
     //exam length will display exam length
+    position = 0;
+    currentQuestion = (this.position + 1);
     ExamLength;
 
+    ExamName;
+    ExamTime;
+    countDownDate;
+    timer = '0:0:0';
+    remainingTime = 0;
+
+    //hold current user's answer and previous answer
     userAnswer;
 
+    //question type
     multipleChoice = true;
 
+    @wire(examDuration)
+    //handleExam will handle the data or exam assigned
+    handleDuration({error, data}){
+        if(data){
+            this.ExamTime = data[0].Exam__r.Duration__c;
+            this.ExamName = data[0].Exam__r.Name;
+            this.startExam();
+        } else if (error){
+            console.log(error);
+        } 
+    }
     //wire for apex
     @wire(getfetchExam)
     //handleExam will handle the data or exam assigned
@@ -60,7 +80,7 @@ export default class Exam extends LightningElement {
         if(this.currentQuestion >= this.ExamLength){
             //submit function
         } else {
-            console.log(this.questionArray[this.position].picked);
+            // console.log(this.questionArray[this.position].picked);
             this.userAnswer = '';
             this.position = (this.position + 1);
             this.currentQuestion++;
@@ -117,10 +137,7 @@ export default class Exam extends LightningElement {
             div.innerText = div.title;
             div.onclick = () => {
                 this.position = i;
-                // console.log(this.position);
                 this.currentQuestion = div.title;
-                // console.log(this.currentQuestion);
-                // console.log(this.Examinfo);
                 this.updateQuestion();
             };
             nav.appendChild(div);
@@ -148,6 +165,32 @@ export default class Exam extends LightningElement {
         // console.log(this.questionArray[0].correct);
         // console.log(this.questionArray[0].picked);
         // console.log(this.questionArray[0].stat);
+    }
+    startExam() {
+        var parentThis = this;
+        //console.log(this.ExamTime);
+        this.remainingTime = (this.ExamTime * 60) * 1000;
+        // Run timer code in every 100 milliseconds
+        this.countDownDate = setInterval(function() {
+  
+            // Time calculations for hours, minutes, seconds and milliseconds
+            var hours = Math.floor((parentThis.remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((parentThis.remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((parentThis.remainingTime % (1000 * 60)) / 1000);
+            
+            // Output the result in the timeVal variable
+            parentThis.timer = hours + ":" + minutes + ":" + seconds ;
+            parentThis.remainingTime -= 1000;
+            if (hours == 0 && minutes == 0 && seconds ==0) {
+                    parentThis.submitExam();
+            }
+            if (hours <= 0 && minutes <= 0 && seconds <=0) {
+                parentThis.timer = '0:0:0';
+            }
+        }, 1000);
+    }
+    timeout(){
+
     }
     updateQuestion(){
         if(this.questionArray[this.position].picked != null) {
@@ -181,8 +224,43 @@ export default class Exam extends LightningElement {
             { label: this.questionData.Answer_D__c, value: 'D' },
         ];
     }
-
-
+    submitPopUp = false;
+    scorePopUp = false;
+    questionsMarkedForReview = 0;
+    questionsUnanswered = 0;
+    totalScore = 0;
+    passFail = 'failed';
+    checkQuestions(){
+        this.submitPopUp = true;
+        for(let i =0; i< this.questionArray.length; i++){
+            if(this.questionArray[i].stat == 'unanswered'){
+                this.questionsUnanswered = this.questionsUnanswered + 1;
+            }   
+            if(this.questionArray[i].stat == 'review'){
+                this.questionsMarkedForReview = this.questionsMarkedForReview + 1;
+            }   
+        }
+        if (this.questionsMarkedForReview == 0 && this.questionsUnanswered == 0) {
+            this.scorePopUp = true;
+            this.submitPopUp = false;
+            this.submitExam();
+        }
+    }
+    submitExam(){
+        this.submitPopUp = false;
+        this.scorePopUp = true;
+        for(let i =0; i< this.questionArray.length; i++){
+            if (this.questionArray[i].correct == this.questionArray[i].picked) {
+                this.totalScore++;
+            }
+        }
+    }
+    exitSubmit() {
+        this.questionsMarkedForReview = 0;
+        this.questionsUnanswered = 0;
+        this.submitPopUp = false;
+        this.scorePopUp = false;
+    }
     renderedCallback() {
         this.questionNav();
     }

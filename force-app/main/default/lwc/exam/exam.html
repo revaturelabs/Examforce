@@ -1,7 +1,10 @@
 <template>
     <div class="container">
     <!-- Timer and Title Component -->
-    <c-timer></c-timer>
+    <div class="timer card">
+        <div>Exam Name: {ExamName}</div>
+        <div>Time Remaining {timer}</div>
+    </div>
     <!-- Question Body  -->
     <div class="questionBody card">
         <div class="qTitle">
@@ -58,7 +61,34 @@
             <div class="review keyItem">&nbsp;</div>Review
             <div class="flagged keyItem">&nbsp;</div>Flagged
         </div>
-        <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={submitExam} class="submit keyItem"></lightning-button>
+        <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={checkQuestions} class="submit keyItem"></lightning-button>
     </div>
     </div>
+    <template if:true={submitPopUp}>
+        <div class="dimmer"></div>
+        <div class="card popUp">
+            <h1 class="slds-text-heading_large"><b>Submit Exam</b></h1>
+            <ul>
+                <li>You have {questionsMarkedForReview} questions still marked for review, and {questionsUnanswered} unanswered questions</li>
+                <li>Are you sure?</li>
+            </ul>
+            <div class="submitControls">
+                <lightning-button variant="base" label="Return" title="Return" onclick={exitSubmit} class="reviewButton"></lightning-button>
+                <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={submitExam} class="submit keyItem"></lightning-button>
+            </div>
+        </div>
+    </template>
+    <template if:true={scorePopUp}>
+        <div class="dimmer"></div>
+        <div class="card popUp">
+            <h1 class="slds-text-heading_large"><b>Exam Submitted</b></h1>
+            <ul>
+                <li>You scored</li>
+                <li>{totalScore}</li>
+                <li>and passed/failed the exam</li>
+            </ul>
+            <lightning-button variant="base" label="Close" title="Close" onclick={close} class="reviewButton"></lightning-button>
+        </div>
+    </template>
+
 </template>
