@@ -1,0 +1,25 @@
+<template>
+    <header>
+        <div class="top">
+            <lightning-icon icon-name="action:approval" 
+            alternative-text="Approved" 
+            title="Approved">
+            </lightning-icon>
+         
+            <lightning-icon 
+            icon-name="utility:rows" 
+            size="large"
+            alternative-text="Navigation Menu" 
+            onclick={handleNav}>
+            </lightning-icon>
+            
+        </div>
+        <div class="menuOptions">
+            <div class="menuItem" onclick={handlePageChange}>Home</div> <!-- Go to header.js -->
+            <div class="menuItem" onclick={handlePageChange}>Case Management</div>
+            <div class="menuItem" onclick={handlePageChange}>Account Management</div>
+
+        </div>
+        
+    </header>
+</template>

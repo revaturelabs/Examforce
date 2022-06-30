@@ -1,0 +1,216 @@
+<template>
+    <!-- Referencing main.js -->
+    <!-- When you reference a property, there is an object in it, with two more objects within it, error and data-->
+    <!-- So you need to append .data to get the data object from within the property reference -->
+    
+    <template if:true={renderExam}>
+        <c-exam examid={examId}></c-exam>
+    </template>
+    <template if:false={renderExam}>
+        <div class="task-manager">
+            <div class="bg">
+                <div class="left-bar">
+                    <div class="upper-part">
+                        <div class="actions">
+    
+                            <a class="checked" href='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'
+                                style="color: #000000"><img src='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'></a>
+    
+    
+                        </div>
+                    </div>
+                    <div class="left-content">
+    
+    
+                        <div class="task-box">
+    
+    
+                            <div class="members">
+                                <img
+                src="http://cdn.onlinewebfonts.com/svg/img_243887.png"
+                alt="member" >
+    
+                            </div>
+                            <div class="description-task">
+                                <div class="profile-name">{firstName.data}</div>
+                            </div>
+                        </div>
+    
+    
+                        <ul class="action-list">
+                            <ul class="category-list">
+                                <li class="item">
+                                    <h1><span>Menu</span></h1>
+                                </li>
+    
+                            </ul>
+    
+                            <li class="selected-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="stroke-linejoin"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-users">
+                                    <circle cx="9" cy="12" r="6" />
+                                </svg>
+    
+                                <span>Today</span>
+    
+                            </li>
+    
+                            <li class=" selected-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-users">
+                                    <circle cx="9" cy="12" r="6" />
+                                </svg>
+                                <span > Calendar</span>
+                            </li>
+    
+    
+    
+                        </ul>
+                        <ul class="category-list">
+                            <li class="item">
+                                <span>My Account</span>
+                            </li>
+                        </ul>
+    
+                        <ul class="selected-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="stroke-linejoin"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-users">
+                                <circle cx="9" cy="12" r="6" />
+                            </svg>
+    
+                            <span>Settings</span>
+    
+                        </ul>
+    
+                        <ul class="selected-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="stroke-linejoin"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-users">
+                                <circle cx="9" cy="12" r="6" />
+                            </svg>
+    
+                            <span>My Privacy</span>
+    
+                        </ul>
+    
+    
+    
+    
+    
+                        <div class="logout-box">
+                            <a href={logoutLink}>Logout</a>
+                        </div>
+    
+    
+    
+    
+    
+    
+                    </div>
+                </div>
+                <div class="page-content">
+                    <div class="header">Today Tasks</div>
+                    <div class="content-categories">
+                        <div class="checked">
+                            <div class="label-wrapper">
+                                <input class="nav-item" name="nav" type="radio" id="opt-1">
+                                <label class="category" for="opt-1">All</label>
+                            </div>
+                        </div>
+    
+    
+                        <div class="label-wrapper">
+                            <input class="nav-item" name="nav" type="radio" id="opt-2" checked>
+                            <label class="category" for="opt-2">History</label>
+                        </div>
+    
+    
+                    </div>
+                    <div class="tasks-wrapper">
+                        <div class="task">
+                            <input class="task-item" name="task" type="checkbox" id="item-1" checked>
+                            <label for="item-1">
+              <span class="label-text">Dashboard Design Implementation</span>
+            </label>
+                            <span class="tag approved">Approved</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="right-bar">
+                <div class="top-part">
+    
+    
+    
+                </div>
+                <div class="header">Upcoming Tests</div>
+    
+                <div class="right-content">
+
+                    <template if:true={examList}>
+    
+
+                        <template if:true={examName.data}>
+                            <template for:each={examName.data} for:item="exam">
+                                <lightning-card class="slds-card__header" key={exam.Exam__r.Id}>
+                                    <div class="task-box">
+                                        <div class="slds-m-around_medium description-task">
+                                            <div class="task-name">{exam.Exam__r.Name}</div>
+                                            <div class="time">{exam.Exam__r.Duration__c}</div>
+                                            <div class="task-name">{exam.Exam__r.Id}</div>
+                                            
+                                        </div>
+                                        <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} onclick={startExam}></lightning-button>
+
+
+                                    </div>
+                                        
+                                </lightning-card>
+                
+                            </template>
+                        </template>
+                    </template> 
+                     
+                     
+                        
+    
+    
+                    <!-- <div class="task-box">
+                        <div class="description-task">
+                            <div class="time">08:00 - 09:00 AM</div>
+                            <div class="task-name">Fundamentals Review</div>
+                        </div>
+    
+                    </div>
+    
+                    <div class="task-box yellow">
+                        <div class="description-task">
+                            <div class="time">10:00 - 11:00 AM</div>
+                            <div class="task-name">Apex Design</div>
+                        </div>
+    
+                        <div class="members">
+                            <img class="images"
+                src="https://www.testim.io/wp-content/uploads/2021/12/Apex-Triggers-in-Salesforce-A-Beginners-Guide@2x.jpg"
+                alt="member">
+    
+                        </div>
+                    </div> -->
+    
+    
+    
+                </div>
+            </div>
+        </div>
+    
+    
+    </template>    
+</template>
+

@@ -1,0 +1,17 @@
+<template>
+    <!--References pagechange event in header.js-->
+    <!--Go to appContainer.js-->
+    <c-header onpagechange={navigate}></c-header> 
+
+    <template if:true={main}>
+        <c-main></c-main>
+    </template>
+    <template if:true={caseMgmt}>
+        <c-case-management></c-case-management>
+    </template>
+    <template if:true={accountMgmt}>
+        <c-account-management></c-account-management>
+    </template>
+
+    <lightning-button onclick={displayAssignedExam} label="Invoke ContactId" variant="destructive" ></lightning-button>
+</template>

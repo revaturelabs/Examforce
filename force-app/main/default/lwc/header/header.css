@@ -1,0 +1,26 @@
+header{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: aquamarine;
+
+}
+
+.top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+}
+
+.menuOptions .menuItem{
+    display: none;
+}
+
+.navSelected{
+    display: block;
+    cursor: pointer;
+}
+
