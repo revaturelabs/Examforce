@@ -2,9 +2,11 @@
     <!-- Referencing main.js -->
     <!-- When you reference a property, there is an object in it, with two more objects within it, error and data-->
     <!-- So you need to append .data to get the data object from within the property reference -->
+    <div class="container">
     <template if:true={examList}>
-    <h2>Welcome Me</h2> 
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut, ducimus explicabo. Quam corporis deleniti fugit enim, doloribus corrupti incidunt temporibus necessitatibus aspernatur hic nulla? Aliquam expedita natus assumenda ipsum vitae!</p>
+    <h2>Welcome to Examforce</h2> 
+    <p>Please Select an available exam</p>
+    <div><a href={logoutLink}>Logout</a></div>
     
 
         <template if:true={examName.data}>
@@ -15,16 +17,14 @@
                         <li>{exam.Exam__r.Duration__c}</li>
                         <li>{exam.Exam__r.Id}</li>
                     </ul>
-                    <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} onclick={startExam}></lightning-button>
+                    <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} name={exam.Exam__r.Name} duration={exam.Exam__r.Duration__c} assigned={exam.Id} onclick={startExam}></lightning-button>
                 </lightning-card>
 
             </template>
         </template>
         </template>   
         <template if:true={renderExam}>
-            <c-exam examid={examId}></c-exam>
+            <c-exam examid={examId} assignedid={assignedid} onclose={closeExam}></c-exam>
         </template>
-    
-    
-        
+    </div>
 </template>

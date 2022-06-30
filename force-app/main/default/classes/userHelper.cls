@@ -5,13 +5,12 @@ public without sharing class userHelper {
     // Cacheable stores data in the client side storage so they don't have to wait for a server call
     // cacheable will improve performance, can't use it if you are modifying data
     // Biggest use case is when you are just returning data
-    
     @AuraEnabled (cacheable=true)
     public static List<Assigned_Exam__c> getUserName() {
         try {
             String userEmail = UserInfo.getUserEmail();
             Contact con = [SELECT Id FROM Contact WHERE Email =: userEmail];
-            return [SELECT Exam__r.Name, Exam__r.Duration__c, Exam__r.id FROM Assigned_Exam__c WHERE Assigned_Exam__c.contact__r.Id =: con.Id];
+            return [SELECT Id, Exam__r.Name, Exam__r.Duration__c, Exam__r.id FROM Assigned_Exam__c WHERE Assigned_Exam__c.contact__r.Id =: con.Id];
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

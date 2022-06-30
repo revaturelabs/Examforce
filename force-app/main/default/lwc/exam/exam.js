@@ -2,66 +2,64 @@
 exam.js
 Developer: Trenton & Kory 
 Date Created: 06/22/22
-Last Modified: 06/25/22
+Last Modified: 07/1/22
 Description: To be rendered when AssignedExam is clicked, display questions associted with assigned exam
 */
 import { LightningElement, wire, api } from 'lwc';
 import getfetchExam from '@salesforce/apex/fetchExam.fetchExam';
-// import examDuration from '@salesforce/apex/examDuration.examDuration';
+import examDML from "@salesforce/apex/answeredQCreator.AnsweredQCreator";
+import Description from '@salesforce/schema/Case.Description';
+import Subject from '@salesforce/schema/Case.Subject';
 
 export default class Exam extends LightningElement {
-    // examid = 'a028Z00000ZvgokQAB';
     @api examid;
+    @api recordId;
+    @api objectApiName;
+    assignedExamid;
     questionArray = [];
+    caseSubject = Subject;
+    caseDescription = Description;
 
-    //Exam info to store data from the apex class that does a SOQL(fetchExam) to get the questions
-    Examinfo;
-    //Question Data holds question possible answers
-    //Question body is the body of the current question
-    questionData;
-    questionBody;
-    //postion is the position in the current array of questions this referes to position 0 as the start
-    //current questions is the position that will display on the exam
-    //exam length will display exam length
-    position = 0;
-    currentQuestion = (this.position + 1);
-    ExamLength;
+
+    Examinfo;     //Exam info to store data from the apex class that does a SOQL(fetchExam) to get the questions
+
+
+    questionData;     //Question Data holds question possible answers
+    questionBody;     //Question body is the body of the current question
+    position = 0;     //postion is the position in the current array of questions this referes to position 0 as the start
+    currentQuestion = (this.position + 1);     //current questions is the position that will display on the exam
+    ExamLength;     //current questions is the position that will display on the exam
 
     ExamName;
     ExamTime;
     countDownDate;
     timer = '0:0:0';
     remainingTime = 0;
+    isFlagged = false;
+    flaggedQuestion;
+    submitPopUp = false;
+    scorePopUp = false;
+    questionsMarkedForReview = 0;
+    questionsUnanswered = 0;
+    totalScore = 0;
+    passFail = 'failed';
+    userAnswer;     //hold current user's answer and previous answer
 
-    //hold current user's answer and previous answer
-    userAnswer;
+    multipleChoice = true;     //question type
 
-    //question type
-    multipleChoice = true;
-    //handleExam will handle the data or exam assigned
-    // @wire(examDuration)
-    
-    // handleDuration({error, data}){
-    //     if(data){
-    //         this.ExamTime = data[0].Exam__r.Duration__c;
-    //         this.ExamName = data[0].Exam__r.Name;
-    //         this.startExam();
-    //     } else if (error){
-    //         console.log(error);
-    //     } 
-    // }
-    //wire for apex
-    // @wire(getfetchExam)
-    @wire(getfetchExam,{q : '$examid'})
-    //handleExam will handle the data or exam assigned
-    handleExam({error, data}){
+    apexWireId;     //variable wire for apex
+
+    @wire(getfetchExam,{q : '$apexWireId'})
+    handleExam({error, data}){     //handleExam will handle the data or exam assigned
         if(data){
-            console.log(this.examid);
-            console.log(data);
+            this.ExamName = this.examid.name;
+            this.ExamTime = this.examid.duration;
+            this.assignedExamid = this.examid.assignedid;
             this.Examinfo = data;
             this.ExamLength = data.length;
             this.examData();
             this.createAnswer(data);
+            this.startExam();
         } else if (error){
             console.log(error);
         } 
@@ -84,7 +82,6 @@ export default class Exam extends LightningElement {
         if(this.currentQuestion >= this.ExamLength){
             //submit function
         } else {
-            // console.log(this.questionArray[this.position].picked);
             this.userAnswer = '';
             this.position = (this.position + 1);
             this.currentQuestion++;
@@ -148,27 +145,27 @@ export default class Exam extends LightningElement {
         }
     };
     //factory function to create js objects to store question/answer information
-    ExamQuestion(questionNum, correct, picked, stat){
+    ExamQuestion(assignedExamId,questionId,questionNum, correct, picked, stat){
         return {
+            assignedExamId,
+            questionId,
             questionNum,
             correct,
             picked,
             stat       }
     }
     createAnswer(examInfo) {
+        let assignedExamId = this.assignedExamid;
         for(let i=0;i<examInfo.length;i++){
+            let questionId = examInfo[i].Question__r.Id;
             let questionNum= (i+1);
-            let correct = examInfo[i].Correct_Answer__c;
+            let correct = examInfo[i].Question__r.Correct_Answer__c;
             let picked = null;
             let stat = 'unanswered';
-            let question = this.ExamQuestion(questionNum, correct, picked, stat);
+            let question = this.ExamQuestion(assignedExamId,questionId,questionNum, correct, picked, stat);
             this.questionArray.push(question);
         }
 
-        // console.log(this.questionArray[0].questionNum);
-        // console.log(this.questionArray[0].correct);
-        // console.log(this.questionArray[0].picked);
-        // console.log(this.questionArray[0].stat);
     }
     startExam() {
         var parentThis = this;
@@ -193,18 +190,14 @@ export default class Exam extends LightningElement {
             }
         }, 1000);
     }
-    timeout(){
 
-    }
     updateQuestion(){
         if(this.questionArray[this.position].picked != null) {
             this.userAnswer = this.questionArray[this.position].picked;
         }
         this.examData();
     }
-    submitExam(){
-        //submit logic
-    }
+
     markForReview(){
         this.questionArray[this.position].stat = 'review';
         this.questionNav();
@@ -230,14 +223,6 @@ export default class Exam extends LightningElement {
             { label: this.questionData.Question__r.Answer_D__c, value: 'D' },
         ];
     }
-    isFlagged = false;
-    flaggedQuestion;
-    submitPopUp = false;
-    scorePopUp = false;
-    questionsMarkedForReview = 0;
-    questionsUnanswered = 0;
-    totalScore = 0;
-    passFail = 'failed';
     checkQuestions(){
         this.submitPopUp = true;
         for(let i =0; i< this.questionArray.length; i++){
@@ -257,11 +242,18 @@ export default class Exam extends LightningElement {
     submitExam(){
         this.submitPopUp = false;
         this.scorePopUp = true;
+        this.totalScore = 0;
         for(let i =0; i< this.questionArray.length; i++){
             if (this.questionArray[i].correct == this.questionArray[i].picked) {
-                this.totalScore++;
+                this.totalScore = this.totalScore + 1;
             }
         }
+        this.totalScore = Math.floor((this.totalScore / this.questionArray.length) * 100);
+        if (this.totalScore > 70) {
+            this.passFail = 'passed'
+        }
+        this.dml();
+
     }
     exitSubmit() {
         this.questionsMarkedForReview = 0;
@@ -269,7 +261,37 @@ export default class Exam extends LightningElement {
         this.submitPopUp = false;
         this.scorePopUp = false;
     }
+    dml(){
+        let qArray = [];
+        let answeredQuestions = {};
+
+        function JsonFactory(Assigned_Exam__c,Question__c,Answered_Correctly__c,User_Answer__c){
+            return {
+                Assigned_Exam__c,
+                Question__c,
+                Answered_Correctly__c,
+                User_Answer__c
+            }
+        };
+        for(let  i=0; i< this.questionArray.length; i++){
+            let correct = false;
+            if (this.questionArray[i].correct == this.questionArray[i].picked) {
+                correct = true;
+            }
+            let Question = JsonFactory(this.questionArray[i].assignedExamId, this.questionArray[i].questionId, correct, this.questionArray[i].picked);
+            Object.assign(answeredQuestions, Question);
+            qArray.push(answeredQuestions);
+        }
+        console.log(JSON.stringify(answeredQuestions))
+        examDML({s : JSON.stringify(qArray)});
+        this.close();
+    }
+
+    close(){
+        this.dispatchEvent(new CustomEvent ('close'));
+    }
     renderedCallback() {
+        this.apexWireId = this.examid.examid;
         this.questionNav();
     }
     
