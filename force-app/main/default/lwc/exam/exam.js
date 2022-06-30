@@ -7,10 +7,11 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
 */
 import { LightningElement, wire, api } from 'lwc';
 import getfetchExam from '@salesforce/apex/fetchExam.fetchExam';
-import examDuration from '@salesforce/apex/examDuration.examDuration';
+// import examDuration from '@salesforce/apex/examDuration.examDuration';
 
 export default class Exam extends LightningElement {
-    @api examId;
+    // examid = 'a028Z00000ZvgokQAB';
+    @api examid;
     questionArray = [];
 
     //Exam info to store data from the apex class that does a SOQL(fetchExam) to get the questions
@@ -37,31 +38,30 @@ export default class Exam extends LightningElement {
 
     //question type
     multipleChoice = true;
-
-    @wire(examDuration)
     //handleExam will handle the data or exam assigned
-
+    // @wire(examDuration)
     
-    handleDuration({error, data}){
-        if(data){
-            this.ExamTime = data[0].Exam__r.Duration__c;
-            this.ExamName = data[0].Exam__r.Name;
-            this.startExam();
-        } else if (error){
-            console.log(error);
-        } 
-    }
+    // handleDuration({error, data}){
+    //     if(data){
+    //         this.ExamTime = data[0].Exam__r.Duration__c;
+    //         this.ExamName = data[0].Exam__r.Name;
+    //         this.startExam();
+    //     } else if (error){
+    //         console.log(error);
+    //     } 
+    // }
     //wire for apex
     // @wire(getfetchExam)
-    @wire(getfetchExam,{q : '$examId'})
+    @wire(getfetchExam,{q : '$examid'})
     //handleExam will handle the data or exam assigned
     handleExam({error, data}){
         if(data){
+            console.log(this.examid);
+            console.log(data);
             this.Examinfo = data;
             this.ExamLength = data.length;
             this.examData();
             this.createAnswer(data);
-            console.log(data);
         } else if (error){
             console.log(error);
         } 
@@ -76,7 +76,7 @@ export default class Exam extends LightningElement {
     //this updates the exam info when next or previous is selected
     examData(){
         this.questionData = this.Examinfo[this.position];
-        this.questionBody = this.questionData.Body__c;
+        this.questionBody = this.questionData.Question__r.Body__c;
 
     }
     //next button to navigate through questions
@@ -209,8 +209,10 @@ export default class Exam extends LightningElement {
         this.questionArray[this.position].stat = 'review';
         this.questionNav();
     }
-    flagQuestion(){
-
+    switchIsFlagged(){
+        this.flaggedQuestion = this.questionData.Question__c;
+        //this.flaggedQuestion = this.examInfo[this.position].Question__r.id;
+        this.isFlagged = !this.isFlagged;
     }
     get options() {
         if (this.questionData == undefined){
@@ -222,12 +224,14 @@ export default class Exam extends LightningElement {
             ];
         }
         return [
-            { label: this.questionData.Answer_A__c, value: 'A' },
-            { label: this.questionData.Answer_B__c, value: 'B' },
-            { label: this.questionData.Answer_C__c, value: 'C' },
-            { label: this.questionData.Answer_D__c, value: 'D' },
+            { label: this.questionData.Question__r.Answer_A__c, value: 'A' },
+            { label: this.questionData.Question__r.Answer_B__c, value: 'B' },
+            { label: this.questionData.Question__r.Answer_C__c, value: 'C' },
+            { label: this.questionData.Question__r.Answer_D__c, value: 'D' },
         ];
     }
+    isFlagged = false;
+    flaggedQuestion;
     submitPopUp = false;
     scorePopUp = false;
     questionsMarkedForReview = 0;

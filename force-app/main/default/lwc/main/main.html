@@ -1,0 +1,30 @@
+<template>
+    <!-- Referencing main.js -->
+    <!-- When you reference a property, there is an object in it, with two more objects within it, error and data-->
+    <!-- So you need to append .data to get the data object from within the property reference -->
+    <template if:true={examList}>
+    <h2>Welcome Me</h2> 
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut, ducimus explicabo. Quam corporis deleniti fugit enim, doloribus corrupti incidunt temporibus necessitatibus aspernatur hic nulla? Aliquam expedita natus assumenda ipsum vitae!</p>
+    
+
+        <template if:true={examName.data}>
+            <template for:each={examName.data} for:item="exam">
+                <lightning-card key={exam.Exam__r.Id} title="Card for each exam" icon-name="custom:custom14">
+                    <ul class="slds-m-around_medium">
+                        <li>{exam.Exam__r.Name}</li>
+                        <li>{exam.Exam__r.Duration__c}</li>
+                        <li>{exam.Exam__r.Id}</li>
+                    </ul>
+                    <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} onclick={startExam}></lightning-button>
+                </lightning-card>
+
+            </template>
+        </template>
+        </template>   
+        <template if:true={renderExam}>
+            <c-exam examid={examId}></c-exam>
+        </template>
+    
+    
+        
+</template>
