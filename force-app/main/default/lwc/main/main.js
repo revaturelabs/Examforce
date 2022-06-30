@@ -4,18 +4,7 @@ import getFirstName from '@salesforce/apex/userHelper.getUserName'
 //console.log(examName);
 
 export default class Main extends LightningElement {
-    //@api makes property public to parent component
-    //@api let's parent component utilize child methods
 
-    //data = [];
-    //columns = columns;
-
-    
-
-    //@api propertyName;
-
-    //@wire Brings apex into LWC
-    //Referencing userHelper method getUserName
     examList = true;
     renderExam = false;
     examId;
