@@ -1,3 +1,10 @@
+/*
+userHelper apex class
+Developer: Yura & Kory 
+Date Created: 06/22/22
+Last Modified: 06/29/22
+Description: To be called when a user is logged in to get all the exams that have been assigned to the user returns a List<Assigned_Exam__c>
+*/
 public without sharing class userHelper {
 
     // Need @AuraEnabled to use Apex in Aura or LWC
@@ -6,7 +13,7 @@ public without sharing class userHelper {
     // cacheable will improve performance, can't use it if you are modifying data
     // Biggest use case is when you are just returning data
     @AuraEnabled (cacheable=true)
-    public static List<Assigned_Exam__c> getUserName() {
+    public static List<Assigned_Exam__c> getExamInfo() {
         try {
             String userEmail = UserInfo.getUserEmail();
             Contact con = [SELECT Id FROM Contact WHERE Email =: userEmail];

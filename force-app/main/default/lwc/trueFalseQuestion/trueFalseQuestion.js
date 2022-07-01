@@ -1,3 +1,10 @@
+/*
+exam.js
+Developer: Kathryn & Matt
+Date Created: 06/22/22
+Last Modified: 07/1/22
+Description: To be rendered when true false question is true
+*/
 import { LightningElement, api, wire, track } from 'lwc';
 
 export default class TrueFalseQuestion extends LightningElement {

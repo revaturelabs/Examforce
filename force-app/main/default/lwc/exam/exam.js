@@ -12,11 +12,11 @@ import Description from '@salesforce/schema/Case.Description';
 import Subject from '@salesforce/schema/Case.Subject';
 
 export default class Exam extends LightningElement {
-    @api examid;
+    @api examid; //this is an object from main.html/js that contains Exam__c.id Exam__c.duration Exam__c.name and Assigned_Exam__c.id
     @api recordId;
     @api objectApiName;
-    assignedExamid;
-    questionArray = [];
+    assignedExamid; //set as id from (@api examid) object
+    questionArray = []; //store objects from Examquestion factory function
     caseSubject = Subject;
     caseDescription = Description;
 
@@ -50,7 +50,7 @@ export default class Exam extends LightningElement {
     apexWireId;     //variable wire for apex
 
     @wire(getfetchExam,{q : '$apexWireId'})
-    handleExam({error, data}){     //handleExam will handle the data or exam assigned
+    handleExam({error, data}){     //handleExam will handle the data or exam assigned only create data if the @wire is successful
         if(data){
             this.ExamName = this.examid.name;
             this.ExamTime = this.examid.duration;
@@ -65,14 +65,19 @@ export default class Exam extends LightningElement {
         } 
     }
     setAnswer(event){
+        //set the userAnswer from the current question
         this.userAnswer = event.target.value;
         this.questionArray[this.position].picked = this.userAnswer;
-        if(this.questionArray[this.position].stat = 'unanswered'){
-            this.questionArray[this.position].stat = 'answered';
+        //determine what status the question should have
+        if(this.questionArray[this.position].stat != 'review' || this.questionArray[this.position].stat != 'flagged'){
+            if(this.questionArray[this.position].stat = 'unanswered'){
+                this.questionArray[this.position].stat = 'answered';
+            }
         }
     }
     //this updates the exam info when next or previous is selected
     examData(){
+        //when run should update current question information
         this.questionData = this.Examinfo[this.position];
         this.questionBody = this.questionData.Question__r.Body__c;
 
@@ -82,6 +87,7 @@ export default class Exam extends LightningElement {
         if(this.currentQuestion >= this.ExamLength){
             //submit function
         } else {
+            //clear current answer and update position to the next question
             this.userAnswer = '';
             this.position = (this.position + 1);
             this.currentQuestion++;
@@ -93,6 +99,7 @@ export default class Exam extends LightningElement {
         if(this.currentQuestion == 1){
             //do nothing
         } else {
+            //inverse of next
             this.position = (this.position - 1);
             this.currentQuestion--;
             if (this.questionArray[this.position].picked == null){
@@ -102,8 +109,14 @@ export default class Exam extends LightningElement {
         }
     }
     questionNav(){
+        //dynamic boxes in the nav section - loop over every item in the question array and add a box to the nav with the question number inside
         const nav = this.template.querySelector('.list');
         nav.innerHTML = ``;
+        if(this.questionArray[this.position].picked != null) {
+            this.userAnswer = this.questionArray[this.position].picked;
+        } else {
+            this.userAnswer = '';
+        }
         for(let i=0; i<this.ExamLength; i++) {
             let div = document.createElement('lightning-button');
             div.classList.add('navButton');
@@ -118,19 +131,19 @@ export default class Exam extends LightningElement {
                 case 'answered':
                     div.classList.add('answered');
                     div.classList.remove('flagged');
-                    div.classList.remove('reivew');
+                    div.classList.remove('review');
                     div.classList.remove('unanswered');
                   break;
                   case 'flagged':
                     div.classList.remove('answered');
                     div.classList.add('flagged');
-                    div.classList.remove('reivew');
+                    div.classList.remove('review');
                     div.classList.remove('unanswered');
                   break;
                 default:
                     div.classList.remove('answered');
                     div.classList.remove('flagged');
-                    div.classList.remove('reivew');
+                    div.classList.remove('review');
                     div.classList.add('unanswered');
               }
             div.title = (i+1);
@@ -141,12 +154,14 @@ export default class Exam extends LightningElement {
                 this.currentQuestion = div.title;
                 this.updateQuestion();
             };
+            //this only works due to lwc:dom=manual in the html
             nav.appendChild(div);
         }
     };
     //factory function to create js objects to store question/answer information
     ExamQuestion(assignedExamId,questionId,questionNum, correct, picked, stat){
         return {
+            //these are keys in the objects and above are the parameters passed in, best way to create objects in JS
             assignedExamId,
             questionId,
             questionNum,
@@ -155,6 +170,7 @@ export default class Exam extends LightningElement {
             stat       }
     }
     createAnswer(examInfo) {
+        //this fills the question array with those Exam Question objects, this also stores all the correct answers and user answers 
         let assignedExamId = this.assignedExamid;
         for(let i=0;i<examInfo.length;i++){
             let questionId = examInfo[i].Question__r.Id;
@@ -167,6 +183,8 @@ export default class Exam extends LightningElement {
         }
     }
     startExam() {
+        //this is a weird timer. the parentThis is needed and i couldn't change it to the 'this' keyword also for some reason the date functions wouldn't work
+        //so this is just generated without dates
         var parentThis = this;
         //console.log(this.ExamTime);
         this.remainingTime = (this.ExamTime * 60) * 1000;
@@ -191,6 +209,7 @@ export default class Exam extends LightningElement {
     }
 
     updateQuestion(){
+        //call this to update question body ans answers - also fills in previously answered questions
         if(this.questionArray[this.position].picked != null) {
             this.userAnswer = this.questionArray[this.position].picked;
         }
@@ -198,15 +217,28 @@ export default class Exam extends LightningElement {
     }
 
     markForReview(){
-        this.questionArray[this.position].stat = 'review';
+        //sets reivew status to supercede other statues
+        if(this.questionArray[this.position].stat != 'review'){
+            this.questionArray[this.position].stat = 'review';
+        }
+         else if (this.questionArray[this.position].picked != null) {
+            this.questionArray[this.position].stat = 'answered';
+        } else {
+            this.questionArray[this.position].stat = 'unanswered';
+        }
         this.questionNav();
     }
     switchIsFlagged(){
+        //toggles flag on and gets the question ID
         this.flaggedQuestion = this.questionData.Question__c;
+        if(this.questionArray[this.position].stat != 'review'){
+            this.questionArray[this.position].stat = 'flagged';
+        }
         //this.flaggedQuestion = this.examInfo[this.position].Question__r.id;
         this.isFlagged = !this.isFlagged;
     }
     get options() {
+        //sets question options for multiple choice - there may need to be a large switch statement for the different questions
         if (this.questionData == undefined){
             return [
                 { label: '', value: 'A' },
@@ -223,6 +255,7 @@ export default class Exam extends LightningElement {
         ];
     }
     checkQuestions(){
+        //this is the start of submit button, checks to see if any questions are unanswered or marked for review, if not it will submit exam
         this.submitPopUp = true;
         for(let i =0; i< this.questionArray.length; i++){
             if(this.questionArray[i].stat == 'unanswered'){
@@ -239,6 +272,7 @@ export default class Exam extends LightningElement {
         }
     }
     submitExam(){
+        //this is the final submit popup that shows score and pass/fail 
         this.submitPopUp = false;
         this.scorePopUp = true;
         this.totalScore = 0;
@@ -259,9 +293,11 @@ export default class Exam extends LightningElement {
         this.submitPopUp = false;
         this.scorePopUp = false;
     }
+    //this calls an apexclass to do a dml statement to send answered questions to the answered question object
     dml(){
+        //apex JSON needs the objects to be stored in an array
         let qArray = [];
-
+        //another factory function to store objects
         function JsonFactory(Assigned_Exam__c,Question__c,Answered_Correctly__c,User_Answer__c){
             return {
                 Assigned_Exam__c,
@@ -270,6 +306,7 @@ export default class Exam extends LightningElement {
                 User_Answer__c
             }
         };
+        //check if answers are correct
         for(let  i=0; i< this.questionArray.length; i++){
             let correct = false;
             if (this.questionArray[i].correct == this.questionArray[i].picked) {
@@ -280,12 +317,12 @@ export default class Exam extends LightningElement {
         }
         examDML({s : JSON.stringify(qArray)})
     }
-
+    //closes the exam in the main component
     close(){
         this.dispatchEvent(new CustomEvent ('close'));
     }
+    //updates the question nav with the new status and inside quesiton nav it clears the old ones
     renderedCallback() {
-        this.apexWireId = this.examid.examid;
         this.questionNav();
     }
     

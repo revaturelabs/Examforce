@@ -1,3 +1,9 @@
+<!-- 
+exam.html
+Developer: Trenton & Matt & Kory
+Date Created: 06/22/22
+Last Modified: 06/29/22
+Description: To be rendered when AssignedExam is clicked, display questions associted from exam.js -->
 <template>
     <div class="container">
     <!-- Timer and Title Component -->
@@ -16,12 +22,8 @@
             {questionBody}
         </div>
     </div>
-    <!-- Question answer section 
-    Will need to be adjusted due to correct question type
-    multi select question as placeholder -->
 
-    <!-- <c-multipleChoice value={questionData}></c-multipleChoice> -->
-
+    <!-- Section for question - determine which type of question to render -->
     <template if:true={multipleChoice}>
         <div class="card">
             <lightning-radio-group name="radioGroup"
@@ -45,8 +47,9 @@
     </div>
     <!-- Question Navigation/Display/Key/Submit -->
     <div class="questionDisplay card">
+        <!-- here lwc:dom manual is used so that inside of the js file we can use append - note: it may be better to use template for:each to iterate through question array -->
         <div class="list" lwc:dom="manual">
-            <!-- 
+            <!-- example of the elements rendered
             <div class="answered q">1</div>
             <div class="answered q">2</div>
             <div class="review q">3</div>
