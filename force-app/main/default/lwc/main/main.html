@@ -12,14 +12,15 @@
                 <div class="left-bar">
                     <div class="upper-part">
                         <div class="actions">
-    
-                            <a class="checked" href='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'
-                                style="color: #000000"><img src='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'></a>
+                            <h1>Examforce</h1>
     
     
                         </div>
                     </div>
                     <div class="left-content">
+                        <!-- <a href='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'
+                        ><img src='https://i.postimg.cc/jSB6qx3d/1-CF30260-C153-46n82-9065-D2250-B670035.png'></a> -->
+
     
     
                         <div class="task-box">
@@ -163,8 +164,8 @@
                                     <div class="task-box">
                                         <div class="slds-m-around_medium description-task">
                                             <div class="task-name">{exam.Exam__r.Name}</div>
-                                            <div class="time">{exam.Exam__r.Duration__c}</div>
-                                            <div class="task-name">{exam.Exam__r.Id}</div>
+                                            <div class="task-name">Duration: {exam.Exam__r.Duration__c} mins</div>
+                                            <!-- <div class="task-name">{exam.Exam__r.Id}</div> -->
                                             
                                         </div>
                                         <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} onclick={startExam}></lightning-button>
