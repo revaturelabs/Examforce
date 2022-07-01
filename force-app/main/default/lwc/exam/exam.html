@@ -93,16 +93,13 @@
     <template if:true={isFlagged}>
         <div class="dimmer"></div>
             <div class="card popUp">
+                <lightning-card>
                 <lightning-record-edit-form object-api-name="Case">
-                    <lightning-output-field field-name="Subject">
-                     <slot>{flaggedQuestion}</slot>
-                    </lightning-output-field>
+                    <lightning-input-field field-name="Subject" value={flaggedQuestion} class="slds-hidden"></lightning-input-field>
                     <lightning-input-field field-name="Description"></lightning-input-field>
-        <div class="slds-var-m-top_medium">
-            <lightning-button variant="brand" type="submit" label="Save" onclick={switchIsFlagged}>
-            </lightning-button>
-        </div>
-    </lightning-record-edit-form>
+                    <lightning-button type="submit" label="Save" onclick={switchIsFlagged}> </lightning-button>
+                </lightning-record-edit-form>
+            </lightning-card>
             </div>
             </template>
         
