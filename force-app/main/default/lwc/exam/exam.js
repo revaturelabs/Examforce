@@ -165,7 +165,6 @@ export default class Exam extends LightningElement {
             let question = this.ExamQuestion(assignedExamId,questionId,questionNum, correct, picked, stat);
             this.questionArray.push(question);
         }
-
     }
     startExam() {
         var parentThis = this;
@@ -253,7 +252,6 @@ export default class Exam extends LightningElement {
             this.passFail = 'passed'
         }
         this.dml();
-
     }
     exitSubmit() {
         this.questionsMarkedForReview = 0;
@@ -263,7 +261,6 @@ export default class Exam extends LightningElement {
     }
     dml(){
         let qArray = [];
-        let answeredQuestions = {};
 
         function JsonFactory(Assigned_Exam__c,Question__c,Answered_Correctly__c,User_Answer__c){
             return {
@@ -279,12 +276,9 @@ export default class Exam extends LightningElement {
                 correct = true;
             }
             let Question = JsonFactory(this.questionArray[i].assignedExamId, this.questionArray[i].questionId, correct, this.questionArray[i].picked);
-            Object.assign(answeredQuestions, Question);
-            qArray.push(answeredQuestions);
+            qArray.push(Question);
         }
-        console.log(JSON.stringify(answeredQuestions))
-        examDML({s : JSON.stringify(qArray)});
-        this.close();
+        examDML({s : JSON.stringify(qArray)})
     }
 
     close(){
