@@ -5,106 +5,137 @@ Date Created: 06/22/22
 Last Modified: 06/29/22
 Description: To be rendered when AssignedExam is clicked, display questions associted from exam.js -->
 <template>
-    <div class="container">
-    <!-- Timer and Title Component -->
-    <div class="timer card">
-        <div>Exam Name: {ExamName}</div>
-        <div>Time Remaining {timer}</div>
-    </div>
-    <!-- Question Body  -->
-    <div class="questionBody card">
-        <div class="qTitle">
-            <div>Question {currentQuestion} of {ExamLength}:</div>
-            <lightning-button variant="base" label="Mark for Review" title="Mark for Review" onclick={markForReview} class="reviewButton"></lightning-button>
-            <!-- <div class="reviewButton">Mark for Review</div> -->
-        </div>
-        <div>
-            {questionBody}
-        </div>
-    </div>
-
-    <!-- Section for question - determine which type of question to render -->
-    <template if:true={multipleChoice}>
-        <div class="card">
-            <lightning-radio-group name="radioGroup"
-                              label="Choose the Best Answer"
-                              options={options}
-                              value={userAnswer}
-                              onchange={setAnswer}
-                              type="radio"></lightning-radio-group>
-        </div>
-    </template>
-
-
-    <!-- Flag / next / previous controls -->
-    <div class="buttons">
-        <lightning-button variant="base" label="Flag" title="Flag" onclick={switchIsFlagged} class="flag"></lightning-button>
-        <!-- <div class="flag">Flag</div> -->
-        <div class="controls"> 
-            <lightning-button variant="base" label="Previous" title="Previous" onclick={previous} class="control"></lightning-button>
-            <lightning-button variant="base" label="Next" title="Next" onclick={next} class="control"></lightning-button>
-        </div>
-    </div>
-    <!-- Question Navigation/Display/Key/Submit -->
-    <div class="questionDisplay card">
-        <!-- here lwc:dom manual is used so that inside of the js file we can use append - note: it may be better to use template for:each to iterate through question array -->
-        <div class="list" lwc:dom="manual">
-            <!-- example of the elements rendered
-            <div class="answered q">1</div>
-            <div class="answered q">2</div>
-            <div class="review q">3</div>
-            <div class="flagged q">4</div>
-            <div class="q">5</div> 
-            -->
-        </div>
-
-        <div class="key">
-            <div class="answered keyItem"> &nbsp;</div>Answered
-            <div class="unanswered keyItem">&nbsp;</div>Unanswered
-            <div class="review keyItem">&nbsp;</div>Review
-            <div class="flagged keyItem">&nbsp;</div>Flagged
-        </div>
-        <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={checkQuestions} class="submit keyItem"></lightning-button>
-    </div>
-    </div>
-    <template if:true={submitPopUp}>
-        <div class="dimmer"></div>
-        <div class="card popUp">
-            <h1 class="slds-text-heading_large"><b>Submit Exam</b></h1>
-            <ul>
-                <li>You have {questionsMarkedForReview} questions still marked for review, and {questionsUnanswered} unanswered questions</li>
-                <li>Are you sure?</li>
-            </ul>
-            <div class="submitControls">
-                <lightning-button variant="base" label="Return" title="Return" onclick={exitSubmit} class="reviewButton"></lightning-button>
-                <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={submitExam} class="submit keyItem"></lightning-button>
+    <div class="background-img">
+        <div class="container">
+            <svg class="title" version="1.0" xmlns="http://www.w3.org/2000/svg" width="1500px" height="200px" viewBox="0 0 1500 200" preserveAspectRatio="xMidYMid meet">
+                <g fill="#ffffff">
+                 <path d="M1026.65 136.10 c-0.35 -0.20 -0.95 -1.20 -1.40 -2.25 -0.65 -1.55 -0.75 -6.15 -0.75 -33.80 0 -28 0.10 -32.30 0.80 -34 0.85 -2.20 1.80 -2.80 3.15 -2.05 2.25 1.20 2.30 1.90 2.30 36.25 0 31.90 0 32.55 -1.05 34.25 -1.05 1.80 -2 2.30 -3.05 1.60z"/>
+                 <path d="M625.65 135.35 c-0.10 -0.20 -2.10 -6.95 -4.40 -15 -5.85 -20.50 -7.40 -25.35 -8.10 -25.35 -0.90 0 -1.05 2 -1.35 15.60 -0.25 11.55 -0.20 12.40 0.65 13.50 0.80 0.95 1.40 1.15 3.25 1.05 1.20 -0.05 2.45 0.20 2.70 0.50 0.30 0.40 0.25 2.20 -0.10 4.80 l-0.55 4.25 -13 0.05 c-7.15 0.05 -13.40 0.25 -13.85 0.50 -0.80 0.30 -0.85 0.05 -0.60 -2.80 0.60 -5.95 0.80 -6.60 2.55 -7.05 1.65 -0.45 2.65 -1.65 3.60 -4.40 0.50 -1.50 3.35 -27.50 4.30 -39.75 0.40 -5 0 -5.70 -4.05 -6.50 l-2.95 -0.60 0.10 -3.70 c0.25 -6.40 -1.75 -5.70 16.50 -5.60 l15.90 0.05 0.85 4.35 c0.85 4.10 5.75 24.25 6.90 28.40 0.30 1 0.85 1.85 1.20 1.85 0.65 0 5.30 -15.70 8.90 -29.75 l1.15 -4.50 7.25 -0.05 c4 0 10.80 -0.20 15.15 -0.40 l7.90 -0.35 -0.30 4.15 c-0.20 2.30 -0.40 4.40 -0.50 4.75 -0.10 0.30 -1.15 0.70 -2.35 0.90 -3.05 0.50 -4.30 1.45 -4.70 3.60 -0.65 3.45 1.55 36.20 2.85 42.55 0.75 3.70 1.75 4.60 5.20 4.60 l2.75 0 -0.05 2.65 c0 1.40 -0.20 3.55 -0.35 4.75 l-0.35 2.10 -14.50 0.20 c-7.95 0.10 -15.10 0.35 -15.85 0.55 -1.35 0.35 -1.40 0.25 -1.35 -1.30 0.05 -0.95 0.30 -3.15 0.65 -4.95 0.55 -3.10 0.60 -3.25 2.25 -3.55 2.90 -0.60 3.30 -1.40 3.50 -7.10 0.30 -8.70 -0.45 -23.35 -1.20 -23.35 -0.70 0 -4.40 11.05 -8.50 25.25 -1.30 4.40 -2.75 9.50 -3.30 11.30 l-0.95 3.30 -6.30 0.45 c-3.45 0.25 -6.40 0.30 -6.55 0.05z"/>
+                 <path d="M765.65 135.50 c-13 -1.45 -21.55 -8.60 -25.15 -21 -1.70 -5.70 -1.95 -17.95 -0.55 -24.75 2.60 -12.65 9.85 -20.80 21.80 -24.55 2.50 -0.80 4.55 -0.95 12.25 -0.95 8.65 0.05 9.50 0.15 12.85 1.35 4.85 1.75 7.40 3.30 10.50 6.45 3.30 3.35 5.85 8.10 7.25 13.75 1.55 6.30 1.55 19.05 -0.05 24.95 -3.40 12.80 -11 20.80 -22.55 23.70 -4.60 1.15 -11.50 1.60 -16.35 1.05z m11.35 -14.45 c3.60 -2.50 5 -10.75 4.10 -23.90 -0.60 -8.85 -1.55 -13.10 -3.40 -15.50 -1.85 -2.40 -3.90 -3.30 -6.90 -3 -2.05 0.20 -2.75 0.55 -4.10 2 -2.35 2.55 -2.80 4.60 -3.05 14.20 -0.50 16.90 1.75 25.55 7.05 27.10 2 0.60 4.70 0.25 6.30 -0.90z"/>
+                 <path d="M857.45 135 c-3.60 -1.90 -4.80 -3.95 -10.10 -17 l-3.10 -7.75 -3.20 -0.15 -3.20 -0.15 0.25 5.90 c0.10 3.25 0.50 6.40 0.80 7 0.65 1.15 3.30 2.15 5.70 2.15 0.70 0 1.40 0.25 1.50 0.55 0.10 0.30 -0.05 2.50 -0.35 4.85 l-0.50 4.25 -15.75 0.10 c-8.65 0.05 -16.85 0.30 -18.20 0.50 l-2.40 0.40 0.25 -1.95 c0.20 -1.05 0.45 -3.35 0.60 -5 0.30 -2.90 0.45 -3.10 1.70 -3.35 2.10 -0.45 4.45 -2.65 5.05 -4.75 0.30 -1.15 0.50 -10.05 0.50 -22.85 0 -24.35 0.25 -23.10 -4.40 -23.35 l-2.85 -0.15 0.05 -2.25 c0 -1.25 0.20 -3.30 0.40 -4.55 l0.35 -2.30 20.60 -0.35 c17.30 -0.25 21.30 -0.20 24.95 0.45 11.60 2 17.60 7.15 18.90 16.15 0.55 4.15 -0.05 8.75 -1.70 12.35 -1.40 3 -5.10 7.20 -8.25 9.35 -1.25 0.85 -2.40 1.60 -2.50 1.70 -0.30 0.25 7.85 13.40 9.90 16.05 1.35 1.65 3.05 3.05 4.90 4 l2.90 1.50 -0.15 3.90 c-0.05 2.20 -0.30 4.15 -0.50 4.35 -0.55 0.55 -10.50 1.40 -16.10 1.35 -3.20 0 -4.70 -0.25 -6.05 -0.95z m-8.10 -38.95 c2.55 -1.85 3.65 -4.55 3.65 -9 0 -5.95 -2.80 -8.55 -9.50 -8.95 l-3.85 -0.20 -0.30 1.65 c-0.20 0.95 -0.45 5.10 -0.65 9.30 l-0.35 7.55 2.45 0.35 c1.35 0.20 2.70 0.40 2.95 0.50 1.65 0.55 3.80 0.10 5.60 -1.20z"/>
+                 <path d="M377.20 131.95 c0.55 -6.10 0.65 -6.30 2.50 -6.65 2.50 -0.50 4.10 -2.25 4.75 -5.25 0.80 -3.85 0.75 -42.40 -0.10 -44.05 -0.50 -1 -1.05 -1.30 -2.85 -1.40 -3.75 -0.30 -3.80 -0.45 -2.70 -8.10 l0.25 -1.75 17.60 0.15 c9.70 0.10 22.75 -0.10 29.05 -0.40 9.50 -0.45 11.55 -0.45 12.15 0.10 0.55 0.60 0.55 1.50 -0.10 5.65 -0.40 2.75 -0.95 7.60 -1.25 10.75 -0.30 3.15 -0.60 5.75 -0.65 5.80 -0.05 0.10 -3.30 0.30 -7.25 0.55 l-7.10 0.40 0 -2.90 c0 -3.10 -0.90 -5.50 -2.35 -6.10 -1.30 -0.50 -8.85 -0.95 -10.30 -0.55 -1.40 0.35 -1.45 0.65 -2.05 10.75 l-0.30 4.20 10.50 -0.25 c8.45 -0.25 10.60 -0.15 11.05 0.40 0.50 0.65 0.25 3.95 -0.85 11.20 l-0.25 1.75 -6.30 -0.20 c-3.45 -0.10 -8.15 0 -10.45 0.20 l-4.20 0.35 0 6.30 c0 8.65 0.10 8.80 5.40 9 7.65 0.25 10 -1.25 11.50 -7.40 l0.90 -3.75 6.65 -0.40 c8.65 -0.55 8.40 -0.75 7.35 6 -0.45 2.70 -1.10 7.70 -1.50 11.10 -0.55 4.70 -0.95 6.40 -1.65 7.05 -0.80 0.75 -1.95 0.75 -11.65 0.35 -10.60 -0.40 -37.45 -0.15 -43.20 0.45 l-2.90 0.35 0.30 -3.70z"/>
+                 <path d="M680.45 135.30 c-0.15 -0.15 0 -2.35 0.25 -4.85 l0.55 -4.55 2.20 -0.85 c1.20 -0.45 2.65 -1.45 3.25 -2.20 1.05 -1.40 1.05 -1.95 1.20 -24.10 0.15 -25.60 0.35 -24.25 -3.70 -24.25 -2.80 0 -2.95 -0.40 -2.40 -5.55 l0.45 -4.05 18 0.05 c9.90 0.05 22.35 -0.15 27.70 -0.45 7.95 -0.45 9.80 -0.45 10.15 0.10 0.45 0.65 0.25 5.05 -0.75 15.90 l-0.60 6.25 -3.50 0.30 c-1.90 0.20 -5.25 0.35 -7.35 0.40 l-3.85 0.05 0.05 -3.30 c0 -2.90 -0.15 -3.45 -1.25 -4.60 -1.10 -1.10 -1.85 -1.30 -5.25 -1.50 -3.55 -0.20 -4.05 -0.10 -4.50 0.75 -0.30 0.50 -0.70 4.40 -0.90 8.60 l-0.35 7.70 10.45 -0.20 c9.95 -0.20 10.45 -0.15 10.60 0.75 0.10 0.55 -0.05 3.50 -0.40 6.65 l-0.60 5.65 -8.65 0 c-4.75 0 -9.35 0.15 -10.20 0.30 l-1.55 0.35 0 5.55 c0 7.80 0.15 8.05 6.25 7.65 3.10 -0.15 4.80 -0.10 5.20 0.30 0.70 0.70 0.65 3.45 -0.10 8.55 l-0.60 3.90 -16.50 0.15 c-9.05 0.05 -17.95 0.30 -19.75 0.50 -1.80 0.20 -3.35 0.25 -3.55 0.05z"/>
+                 <path d="M903.30 134.70 c-10.40 -2.50 -17.95 -10.30 -21.15 -21.70 -0.70 -2.55 -0.90 -5.15 -0.90 -12 0 -9.75 0.75 -13.55 3.90 -20 2.25 -4.55 8 -10.30 12.60 -12.65 7.20 -3.60 9.80 -4.10 21 -4.10 8.05 0.05 11.20 0.25 16 1.15 6.45 1.15 7.55 1.80 7.05 4.10 -0.30 1.40 -2.10 14.10 -2.65 18.95 -0.30 2.25 -0.60 3.25 -1.15 3.30 -0.40 0.05 -4.05 0.30 -8.10 0.45 l-7.40 0.40 0 -4.55 c0 -6.05 -0.70 -7.65 -3.70 -8.80 -1.70 -0.65 -3 -0.80 -4.90 -0.60 -6.40 0.80 -8.40 5.25 -8.40 18.95 0 8.35 0.85 13.80 2.80 17.75 1.65 3.45 3.60 4.80 7.15 5.05 4.95 0.30 7.15 -2 8.25 -8.60 l0.60 -3.55 3.50 -0.30 c1.90 -0.20 5.55 -0.45 8.15 -0.60 l4.70 -0.30 -0.35 4.10 c-0.15 2.25 -0.45 7.45 -0.65 11.55 -0.25 6 -0.45 7.60 -1.15 8.30 -0.95 0.95 -7.25 2.65 -14.05 3.75 -5.90 0.95 -17.15 0.90 -21.15 -0.05z"/>
+                 <path d="M945.70 132.45 c0.65 -6 0.85 -6.95 1.65 -6.95 1.55 0 4.20 -1.70 5.05 -3.20 0.75 -1.40 0.85 -3.95 1 -23.50 0.15 -25.05 0.30 -24.30 -3.60 -24.30 -3.15 0 -3.45 -0.60 -2.80 -5.55 0.25 -2.30 0.50 -4.20 0.50 -4.20 0 0 7.70 0.05 17.10 0.15 9.45 0.10 22.55 -0.05 29.10 -0.40 10 -0.45 12.10 -0.45 12.65 0.15 0.55 0.55 0.55 1.45 -0.05 5.65 -0.40 2.70 -0.85 6.55 -1 8.45 -0.20 1.95 -0.45 4.55 -0.60 5.85 l-0.30 2.30 -5.80 0.30 c-3.20 0.20 -6.45 0.45 -7.20 0.55 -1.40 0.20 -1.40 0.20 -1.40 -2.80 0 -4.15 -0.90 -5.70 -3.70 -6.40 -3.30 -0.80 -9.05 -0.70 -9.80 0.15 -0.30 0.40 -0.65 2.50 -0.80 4.65 -0.10 2.15 -0.30 5.25 -0.40 6.85 l-0.20 2.95 10.40 -0.25 c8.35 -0.25 10.60 -0.15 11 0.40 0.55 0.60 0.05 7.35 -0.80 11.70 l-0.20 1.25 -7.65 -0.15 c-4.15 -0.10 -8.85 0.05 -10.35 0.25 l-2.75 0.40 -0.15 5.85 c-0.10 4.40 0.05 6.30 0.65 7.70 l0.75 1.80 5.10 -0.20 c7.55 -0.25 8.75 -1.15 10.40 -7.55 l0.90 -3.60 6.60 -0.40 c5.50 -0.35 6.75 -0.30 7.35 0.30 0.60 0.60 0.55 1.85 -0.55 9.55 -0.70 4.85 -1.30 9.70 -1.30 10.80 0 1.35 -0.35 2.30 -1.10 3.15 l-1.15 1.20 -11.25 -0.45 c-11.30 -0.45 -36.50 -0.20 -42.45 0.40 l-3.15 0.35 0.30 -3.20z"/>
+                 <path d="M440.60 134.10 c-0.10 -0.40 -0.10 -2.45 0.10 -4.60 l0.30 -3.90 5.90 -5.90 c4.35 -4.45 7.25 -7.95 11.30 -13.90 3 -4.40 5.45 -8.20 5.45 -8.50 0 -1 -9.85 -15 -12.20 -17.35 -2.05 -2.10 -3.40 -2.80 -8.85 -4.70 -0.55 -0.20 -0.60 -1.25 -0.35 -4.85 0.20 -2.55 0.50 -4.80 0.70 -4.95 0.40 -0.45 37.50 -0.95 37.75 -0.50 0.15 0.20 0.10 2.35 -0.10 4.80 -0.35 4.30 -0.40 4.50 -1.60 4.65 -0.70 0.10 -1.65 0.55 -2.10 0.95 -1.70 1.50 -1.10 3.30 3.05 9.50 l2.80 4.10 1.60 -2.60 c0.90 -1.45 2.50 -4.25 3.50 -6.25 2.10 -4.20 1.95 -5.20 -0.90 -5.60 l-1.70 -0.25 0.15 -4.25 c0.10 -2.35 0.35 -4.40 0.55 -4.60 0.15 -0.20 7.05 -0.40 15.30 -0.40 l15 -0.05 0.15 1.90 c0.10 1.05 0.05 3.30 -0.15 5 l-0.30 3.10 -3.30 1.85 c-1.80 1 -4.20 2.65 -5.30 3.65 -1.70 1.55 -13.85 19.15 -14.65 21.30 -0.25 0.65 8.90 13.90 12.15 17.55 2.25 2.55 4.75 4.10 7.70 4.90 3.05 0.80 2.90 0.40 2.25 6.85 l-0.35 3.30 -18.35 0.30 c-10.10 0.15 -18.50 0.10 -18.70 -0.10 -0.25 -0.20 -0.25 -2.35 0 -4.80 0.30 -4.15 0.45 -4.50 1.50 -4.65 1.30 -0.20 2.20 -1.70 1.75 -2.95 -0.15 -0.50 -1.90 -3.20 -3.85 -6.05 l-3.50 -5.15 -0.90 1.15 c-2.05 2.80 -5.05 8.70 -5.05 10.05 0 1.70 1.25 2.85 3 2.85 1.60 0 1.80 0.85 1.40 5.65 l-0.30 4.10 -15.30 0 c-12.25 0 -15.35 -0.15 -15.55 -0.65z"/>
+                 <path d="M528.70 134.65 l-12.60 -0.15 0.25 -3.40 c0.30 -4.95 0.50 -5.40 2.35 -6.60 1 -0.60 2.15 -1.95 2.75 -3.15 0.55 -1.15 4.75 -14 9.35 -28.60 4.55 -14.60 8.45 -26.65 8.65 -26.85 0.15 -0.15 6.55 -0.70 14.20 -1.20 13.60 -0.80 13.95 -0.80 14.85 0.10 0.65 0.65 3.05 9.40 7.75 27.95 3.80 15.20 7.30 27.85 7.90 29 0.75 1.35 1.75 2.30 3.25 3 2.05 0.95 2.10 1.05 2.05 3.25 0 1.25 -0.20 3.25 -0.35 4.45 l-0.35 2.15 -17.90 0.15 c-11.10 0.10 -17.95 -0.05 -18.15 -0.35 -0.15 -0.25 -0.15 -2.45 0.05 -4.90 l0.35 -4.40 2.70 -0.35 c3.75 -0.45 4.40 -1.20 3.95 -4.70 -0.50 -4.60 -0.25 -4.40 -5.15 -4.65 -2.40 -0.10 -6.15 -0.10 -8.35 0.05 l-4 0.30 -0.60 2.25 c-0.30 1.25 -0.60 3.20 -0.60 4.35 -0.05 2.35 0.20 2.50 4.20 2.75 2.35 0.15 2.55 0.65 2 6.25 l-0.35 3.65 -2.80 -0.10 c-1.60 -0.10 -8.50 -0.20 -15.40 -0.25z m27.80 -33.15 c0 -1.15 -3.05 -16.35 -3.50 -17.35 -0.50 -1.15 -1.70 -1.55 -2.20 -0.70 -0.15 0.25 -1.40 4.50 -2.70 9.50 l-2.45 9.05 5.45 0 c3.35 0 5.40 -0.20 5.40 -0.50z"/>
+                </g>
+                <g fill="#47beb7">
+                 <path d="M1048.60 149.40 c-0.45 -0.45 -0.60 -12.05 -0.60 -49.20 0 -43.55 0.10 -48.70 0.80 -49.40 0.70 -0.70 3.80 -0.80 26.60 -0.80 l25.80 0 10.90 10.85 10.90 10.85 0 38.55 c0 29.30 -0.15 38.70 -0.60 39.15 -0.85 0.85 -72.95 0.85 -73.80 0z m69 -5.55 c0.20 -0.30 0.40 -15.60 0.40 -33.95 0 -32.50 -0.05 -33.40 -0.95 -33.90 -0.60 -0.30 -4.65 -0.50 -9.65 -0.50 -6.10 0 -8.90 -0.20 -9.30 -0.60 -0.40 -0.40 -0.60 -2.45 -0.60 -6 0 -5.20 0.05 -5.40 1.25 -6.20 1.15 -0.75 1.35 -0.75 2.50 0 1.15 0.75 1.25 1.15 1.25 4.30 l0 3.50 5.50 0 c3.05 0 5.50 -0.15 5.50 -0.40 0 -0.20 -3.25 -3.60 -7.25 -7.60 l-7.25 -7.25 -22.75 -0.05 -22.75 -0.05 0 44.60 c0 24.50 0.10 44.70 0.20 44.80 0.10 0.10 14.45 0.15 31.85 0.05 24.55 -0.10 31.75 -0.25 32.05 -0.75z"/>
+                 <path d="M1063.10 135.35 c-2.30 -2.30 -2.60 -3.75 -1.20 -5 1.15 -1.05 2.10 -1.05 3.40 -0.15 0.85 0.65 1.20 0.50 4.05 -2.25 3.10 -3 3.95 -3.35 5.70 -2.45 2.05 1.10 1.20 2.95 -3.40 7.60 -2.70 2.70 -4.80 4.40 -5.40 4.40 -0.60 0 -2 -0.95 -3.15 -2.15z"/>
+                 <path d="M1079.30 136.40 c-1.10 -1.55 -1 -2.70 0.30 -3.60 0.90 -0.65 2.80 -0.80 10.15 -0.80 9.80 0 11.25 0.35 11.25 2.70 0 2.55 -1.05 2.80 -11.40 2.80 -9.30 0 -9.55 -0.05 -10.30 -1.10z"/>
+                 <path d="M1104.80 136.55 c-1.20 -1.30 -0.85 -3.10 0.85 -4.05 1.20 -0.65 1.50 -0.65 2.75 0 2.55 1.45 1.60 5 -1.40 5 -0.75 0 -1.75 -0.45 -2.20 -0.95z"/>
+                 <path d="M1061.80 120.20 c-1.15 -1.10 -1 -2.40 0.45 -4.10 l1.20 -1.45 -1.20 -1.15 c-1.50 -1.40 -1.60 -3.05 -0.35 -4.15 1.30 -1.15 2.25 -1.05 4 0.40 1.45 1.20 1.50 1.20 2.35 0.25 1.30 -1.45 2.65 -1.70 4 -0.80 1.50 1 1.60 2.80 0.25 4.05 -0.55 0.50 -1 1.15 -1 1.50 0 0.35 0.45 1 1 1.50 1.25 1.15 1.30 2.85 0.10 3.90 -1.25 1.15 -2.75 1.05 -3.85 -0.15 -0.50 -0.55 -1.15 -1 -1.50 -1 -0.35 0 -1 0.45 -1.50 1 -1.10 1.20 -2.90 1.30 -3.95 0.20z"/>
+                 <path d="M1079.25 120 c-1.10 -1.25 -0.65 -3.30 0.90 -3.80 1.90 -0.65 19.30 -0.35 20.10 0.30 0.90 0.75 1 3.05 0.15 3.90 -0.45 0.45 -3.45 0.60 -10.40 0.60 -9.15 0 -9.90 -0.05 -10.75 -1z"/>
+                 <path d="M1104.55 120.30 c-1.05 -1.25 -0.45 -3.45 1.10 -4.20 2.70 -1.30 5.25 1.25 3.85 3.85 -0.65 1.25 -4.05 1.45 -4.95 0.35z"/>
+                 <path d="M1063.30 102.95 c-1.95 -1.70 -2.55 -2.95 -2.05 -4.50 0.50 -1.50 2.25 -2 3.85 -1.05 1.35 0.80 1.40 0.75 4.60 -2.30 1.75 -1.70 3.40 -3.10 3.65 -3.10 1.15 0 2.65 1.65 2.65 2.90 0 1.05 -1 2.35 -4.15 5.50 -4.75 4.70 -5.75 5 -8.55 2.55z"/>
+                 <path d="M1079 103.55 c-0.75 -1.40 -0.60 -2.30 0.40 -3.20 0.80 -0.75 2.30 -0.85 10.50 -0.85 10.25 0 11.10 0.20 11.10 2.70 0 2.15 -0.65 2.30 -11.35 2.30 -9.50 0 -10.15 -0.05 -10.65 -0.95z"/>
+                 <path d="M1104.55 103.80 c-1.05 -1.25 -0.50 -3.45 1 -4 2.90 -1 5.55 1.35 4.10 3.65 -0.70 1.10 -4.30 1.35 -5.10 0.35z"/>
+                 <path d="M1063.25 86.45 c-2.45 -2.25 -2.85 -3.75 -1.35 -5.10 1.15 -1.05 2.80 -1.10 3.60 -0.05 0.60 0.65 1.05 0.40 3.70 -2.25 3.10 -3.10 4.85 -3.80 6.20 -2.45 1.45 1.45 0.65 3.05 -3.75 7.50 -2.40 2.45 -4.80 4.40 -5.30 4.40 -0.45 0 -1.90 -0.95 -3.10 -2.05z"/>
+                 <path d="M1079.30 87.40 c-1.05 -1.45 -1 -2.55 0.10 -3.55 0.80 -0.75 2.30 -0.85 10.45 -0.85 8.55 0 9.60 0.10 10.30 0.90 1.10 1.20 1.05 2.75 -0.05 3.75 -0.80 0.75 -2.30 0.85 -10.50 0.85 -9.30 0 -9.55 -0.05 -10.30 -1.10z"/>
+                 <path d="M1104.85 87.60 c-1.65 -1.80 -0.40 -4.60 1.95 -4.60 1.50 0 3.20 1.45 3.20 2.70 0 2.45 -3.50 3.75 -5.15 1.90z"/>
+                </g>
+               </svg>
+            <!-- Timer and Title Component -->
+            <div class="timer card">
+                <div>Exam Name: {ExamName}</div>
+                <div>Time Remaining {timer}</div>
             </div>
-        </div>
-    </template>
-    <template if:true={scorePopUp}>
-        <div class="dimmer"></div>
-        <div class="card popUp">
-            <h1 class="slds-text-heading_large"><b>Exam Submitted</b></h1>
-            <ul>
-                <li>You scored</li>
-                <li>{totalScore}%</li>
-                <li>and {passFail} the exam</li>
-            </ul>
-            <lightning-button variant="base" label="Close" title="Close" onclick={close} class="reviewButton"></lightning-button>
-        </div>
-    </template>
-    <template if:true={isFlagged}>
-        <div class="dimmer"></div>
-            <div class="card popUp">
-                <lightning-card>
-                <lightning-record-edit-form object-api-name="Case">
-                    <lightning-input-field field-name="Subject" value={flaggedQuestion} class="slds-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="Description"></lightning-input-field>
-                    <lightning-button type="submit" label="Save" onclick={switchIsFlagged}> </lightning-button>
-                </lightning-record-edit-form>
-            </lightning-card>
+            <!-- Question Body  -->
+            <div class="questionBody card">
+                <div class="qTitle">
+                    <div>Question {currentQuestion} of {ExamLength}:</div>
+                    <lightning-button variant="base" label="Mark for Review" title="Mark for Review" onclick={markForReview} class="reviewButton"></lightning-button>
+                    <!-- <div class="reviewButton">Mark for Review</div> -->
+                </div>
+                <div>
+                    {questionBody}
+                </div>
             </div>
+            <!-- Question answer section 
+            Will need to be adjusted due to correct question type
+            multi select question as placeholder -->
+        
+            <!-- <c-multipleChoice value={questionData}></c-multipleChoice> -->
+        
+            <template if:true={multipleChoice}>
+                <div class="card">
+                    <lightning-radio-group name="radioGroup"
+                                      label="Choose the Best Answer"
+                                      options={options}
+                                      value={userAnswer}
+                                      onchange={setAnswer}
+                                      type="radio"></lightning-radio-group>
+                </div>
+            </template>
+            <template if:true={multiSelect}>
+                <div class="card">
+                    <lightning-checkbox-group name="Checkbox Group"
+                                      label="Choose the Best Answer"
+                                      options={options}
+                                      value={userAnswer}
+                                      onchange={setAnswer}
+                                      type="checkbox"></lightning-checkbox-group>
+                </div>
             </template>
         
+            <!-- Flag / next / previous controls -->
+            <div class="buttons">
+                <lightning-button variant="base" label="Flag" title="Flag" onclick={handleClick} class="flag"></lightning-button>
+                <!-- <div class="flag">Flag</div> -->
+                <div class="controls"> 
+                    <lightning-button variant="base" label="Previous" title="Previous" onclick={previous} class="control"></lightning-button>
+                    <lightning-button variant="base" label="Next" title="Next" onclick={next} class="control"></lightning-button>
+                </div>
+            </div>
+            <!-- Question Navigation/Display/Key/Submit -->
+            <div class="questionDisplay card">
+                <div class="list" lwc:dom="manual">
+                    <!-- 
+                    <div class="answered q">1</div>
+                    <div class="answered q">2</div>
+                    <div class="review q">3</div>
+                    <div class="flagged q">4</div>
+                    <div class="q">5</div> 
+                    -->
+                </div>
+        
+                <div class="key">
+                    <div class="answered keyItem"> &nbsp;</div>Answered
+                    <div class="unanswered keyItem">&nbsp;</div>Unanswered
+                    <div class="review keyItem">&nbsp;</div>Review
+                    <div class="flagged keyItem">&nbsp;</div>Flagged
+                </div>
+                <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={checkQuestions} class="submit keyItem"></lightning-button>
+            </div>
+            </div>
+            <template if:true={submitPopUp}>
+                <div class="dimmer"></div>
+                <div class="card popUp">
+                    <h1 class="slds-text-heading_large"><b>Submit Exam</b></h1>
+                    <ul>
+                        <li>You have {questionsMarkedForReview} questions still marked for review, and {questionsUnanswered} unanswered questions</li>
+                        <li>Are you sure?</li>
+                    </ul>
+                    <div class="submitControls">
+                        <lightning-button variant="base" label="Return" title="Return" onclick={exitSubmit} class="reviewButton"></lightning-button>
+                        <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={submitExam} class="submit keyItem"></lightning-button>
+                    </div>
+                </div>
+            </template>
+            <template if:true={scorePopUp}>
+                <div class="dimmer"></div>
+                <div class="card popUp">
+                    <h1 class="slds-text-heading_large"><b>Exam Submitted</b></h1>
+                    <ul>
+                        <li>You scored</li>
+                        <li>{totalScore}</li>
+                        <li>and passed/failed the exam</li>
+                    </ul>
+                    <lightning-button variant="base" label="Close" title="Close" onclick={close} class="reviewButton"></lightning-button>
+                </div>
+            </template>
+    </div>
+    
 
 </template>

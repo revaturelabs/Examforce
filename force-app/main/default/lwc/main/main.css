@@ -1,470 +1,477 @@
+
+
 /* @import 'c/mainstyle'; */
 
 /* Zablon Charles */
 /* 06/23/2022 */
 
 span{
-    color: #e3e7f7;
-  }
-  
-  body {
-    margin: 0;
-    justify-content: center;
-    flex-direction: column;
-    overflow: auto;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    font-family: 'DM Sans', sans-serif;;
-    font-size: 12px;
-    color: white;
-    background-image: linear-gradient(21deg, rgba(64, 83, 206, 0.3697003234675773) 68%, rgba(255, 206, 196, 0.5) 163%),linear-gradient(163deg, rgba(49, 146, 170, 0.07944489965716128) 86%, rgba(239, 112, 138, 0.5) 40%),linear-gradient(30deg, rgba(76, 79, 173, 0.6173675716587805) 22%, rgba(237, 106, 134, 0.5) 169%),linear-gradient(48deg, rgba(31, 85, 147, 0.7323890641868473) 64%, rgba(247, 126, 132, 0.5) 43%); background-blend-mode: overlay,multiply,color,normal;
-    
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  .bg{
-   
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-   backdrop-filter: blur(12px);
-    border-radius: 4px;
-    box-shadow:
-    0 0.3px 2.2px rgba(0, 0, 0, 0.011),
-    0 0.7px 5.3px rgba(0, 0, 0, 0.016),
-    0 1.3px 10px rgba(0, 0, 0, 0.02),
-    0 2.2px 17.9px rgba(0, 0, 0, 0.024),
-    0 4.2px 33.4px rgba(0, 0, 0, 0.029),
-    0 10px 80px rgba(0, 0, 0, 0.04);
-    overflow: hidden;
-  }
-  button { 
-    border: none; 
-    background: none;
-    cursor: pointer;
-  }
-  .selected-button:hover {
-    background-color: #38373b;
-    border-radius: 10px;
-    
-    height: 25px;
-    width: 100%;
-  
-    cursor: pointer;
-  }
-  .checked {
-    border-bottom: 1px solid #ddd;
-  }
-  .task-manager {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-      height: 100vh;
-    /* max-width: 1200px; */
-    /* height: 100%; */
-    /* max-height: 900px; */
-    background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: bottom center;
-    border-radius: 4px;
-    box-shadow:
-    0 0.3px 2.2px rgba(0, 0, 0, 0.011),
-    0 0.7px 5.3px rgba(0, 0, 0, 0.016),
-    0 1.3px 10px rgba(0, 0, 0, 0.02),
-    0 2.2px 17.9px rgba(0, 0, 0, 0.024),
-    0 4.2px 33.4px rgba(0, 0, 0, 0.029),
-    0 10px 80px rgba(0, 0, 0, 0.04);
-    overflow: hidden;
-    color: white;
-  }
-/* Changes LWC Card Background Color and Text color */
-  :host {
-    --sds-c-card-color-background: #;
-    --slds-c-card-text-color: white;
-    --slds-c-card-color-border: #;
-    
- 
+  color: #e3e7f7;
 }
 
-    .slds-card__header{
-        
-        display: block;
-        border-width: 0;
-    }
+body {
+  margin: 0;
+  justify-content: center;
+  flex-direction: column;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  font-family: 'DM Sans', sans-serif;;
+  font-size: 12px;
+  color: white;
+  background-image: linear-gradient(21deg, rgba(64, 83, 206, 0.3697003234675773) 68%, rgba(255, 206, 196, 0.5) 163%),linear-gradient(163deg, rgba(49, 146, 170, 0.07944489965716128) 86%, rgba(239, 112, 138, 0.5) 40%),linear-gradient(30deg, rgba(76, 79, 173, 0.6173675716587805) 22%, rgba(237, 106, 134, 0.5) 169%),linear-gradient(48deg, rgba(31, 85, 147, 0.7323890641868473) 64%, rgba(247, 126, 132, 0.5) 43%); background-blend-mode: overlay,multiply,color,normal;
   
-  .left-bar {
-    background-color: var(--bg-color);
-    width: 230px;
-    border-right: 1px solid #e3e7f7;
-    position: relative;
-  }
-  
-  .left-content { padding: 40px; }
-  
-  .item {
-  
-    color: var(--main-color);
-    margin-bottom: 14px;
-    font-weight: 500;  
-  }
+}
 
-  svg {
-    width: 14px;
-    height: 14px;
-    color: currentcolor;
-    margin-right: 10px;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+.bg{
+ 
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+ backdrop-filter: blur(12px);
+  border-radius: 4px;
+  box-shadow:
+  0 0.3px 2.2px rgba(0, 0, 0, 0.011),
+  0 0.7px 5.3px rgba(0, 0, 0, 0.016),
+  0 1.3px 10px rgba(0, 0, 0, 0.02),
+  0 2.2px 17.9px rgba(0, 0, 0, 0.024),
+  0 4.2px 33.4px rgba(0, 0, 0, 0.029),
+  0 10px 80px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+button { 
+  border: none; 
+  background: none;
+  cursor: pointer;
+}
+.selected-button:hover {
+  background-color: #38373b;
+  border-radius: 10px;
   
-  .category-list{
-    margin-top: 50px;
-    
-   
-  } 
-  
-  .actions {
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .circle {
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    background-color: #fe4d46;
-    box-shadow: 14px 0 0 0 #fbc023, 28px 0 0 0 #7dd21f;
-  }
-  
-  .circle-2 {
-    border-radius: 50%;
-    width: 4px;
-    height: 4px;
-    background-color: #d5d7e3;
-    box-shadow: -6px 0 0 0 #d5d7e3, 6px 0 0 0 #d5d7e3;
-  }
-  
-  .right-bar {
-    width: 320px;
-    border-left: 1px solid #e3e7f7;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(12px);
-  }
-    
-    .header { 
-      font-size: 20px; 
-      color: #000;
-     
-      margin-left: 30px;
-    
-  }
-  
-  .top-part {
-    padding: 30px;
-    display: flex; 
-    align-self: flex-end;
-     
-  }
+  height: 25px;
+  width: 100%;
 
-  svg {
-    width: 14px;
-    height: 14px;
-    color: var(--main-color);
-    margin-right: 14px;
-  }
-  
-  .count {
-    font-size: 12px;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    background-color: #623ce8;
-    color: #fff;
-   
-    justify-content: center;
-  }
-  
-  .right-content {
-    overflow-y: auto;
-    flex: 1;
-  }
-  .logout-box {
-    position: relative;
-    border-radius: 12px;
-    width: 100%;
-    margin: 20px 0;
-    padding: 16px;
-    cursor: pointer;
-    box-shadow: 0px 0px 3px 0px rgba(235,235,235,1);
-    text-align: center;
-    color: #d5d7e3;
-    
-   
-  }
-   .logout-box:hover {
-      transform: scale(1.02);
-    }
-  .task-box {
-    position: relative;
-    border-radius: 12px;
-    width: 100%;
-    margin: 20px 0;
-    padding: 16px;
-    /* cursor: pointer; */
-
-    color: white;
-    
-  }
-  .left-content .task-box{
-        box-shadow: 0px 0px 5px 0px rgba(235,235,235,1);
-  }
-  /* .task-box:hover {
-      transform: scale(1.02);
-    } */
-  
-  .time { margin-bottom: 6px; opacity: 0.4; font-size: 10px; }
-  
-  .profile-name { 
-    font-size: 14px; 
-    font-weight: 500;
-    opacity: 0.6;
-  padding-left: 20%;
-  }
-  .task-name { 
-    font-size: 14px; 
-    font-weight: 500;
-    opacity: 0.6;
-  
-  }
-  
-  .images{
-    border-radius: 12px;
-  }
-  
-  .yellow { 
-    background-color: var(--box-color);
-  }
-  
-  .blue { background-color: var(--box-color-2); }
-  
-  .red { background-color: var(--box-color-3); }
-  
-  .green { background-color: var(--box-color-4); }
-  
-  .more-button {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background-color: #8e92a4;
-    box-shadow: 0 -4px 0 0 #8e92a4, 0 4px 0 0 #8e92a4;
-    opacity: 0.4;
-    right: 20px;
-    top: 30px;
-    cursor: pointer;
-  }
-  
-  .members {
-    display: flex;
-    margin-top: 14px;
-    
-  }
-
-  img {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    margin-right: 4px;
-    object-fit: cover;
-  }
-
-  .profile-content{
-    
-    background-color: #d2d0da;
-  
-  }
-  .page-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 40px 20px 0 20px;
-    color: white;
-    
-    
-  }
-
-  .header { 
-    font-size: 26px; 
-    color: var(--main-color); 
-    margin-top: 30px;
-  }
-  
-  .content-categories {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    border-bottom: 1px solid #ddd;
-    padding: 20px 0;
-  }
-  
-  .nav-item { display: none; }
-  
-  .category { 
-    font-weight: 500; 
-    color: var(--secondary-color); 
-    
-    transition: .4s ease-in;
-    padding: 20px 30px;
-    cursor: pointer;
-  }
-  
-  
-  
-  .task-item { display: none; }
-  
-  .tasks-wrapper {
-    padding: 30px 0;
-    flex: 1;
-    overflow-y: auto;
-    height: 100%;
-    padding-right: 8px;
-  }
-  
-  .task {
-    display: flex;
-    height: 170px;
-   background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
-   background-repeat: no-repeat;
-      background-size: 100%;
-      background-position: bottom center;
-    border-radius: 12px;
-    justify-content: space-between;
-    position: relative;
-    margin-bottom: 16px;
-    padding-left: 40px;
-    padding-top: 140px;
-    color: #ddd;
-    font-size: 13px;
-    font-weight: 500;
-    
-  }
-    .task:hover {
-     transform: translateY(1px);
-      opacity: 0.8;
-    cursor: pointer;
-  }
-    
-    label {
-      cursor: pointer;
-    }
-  
-  
-   label .label-text { position: relative; }
-  
-   label .label-text:before {
-    content:'';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    left: -24px;
-    transition: .2s ease;
-  }
-  
-  .task-item:checked + label .label-text:before {
-    background-color: var(--checkbox-color);
-    border: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  cursor: pointer;
+}
+.checked {
+  border-bottom: 1px solid #ddd;
+}
+.task-manager {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+    height: 100vh;
+  /* max-width: 1200px; */
+  /* height: 100%; */
+  /* max-height: 900px; */
+  background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
     background-repeat: no-repeat;
-    background-size: 10px;
-    background-position: center;
-    border: 1px solid var(--checkbox-color);
-  }
+    background-size: cover;
+    background-position: bottom center;
+  border-radius: 4px;
+  box-shadow:
+  0 0.3px 2.2px rgba(0, 0, 0, 0.011),
+  0 0.7px 5.3px rgba(0, 0, 0, 0.016),
+  0 1.3px 10px rgba(0, 0, 0, 0.02),
+  0 2.2px 17.9px rgba(0, 0, 0, 0.024),
+  0 4.2px 33.4px rgba(0, 0, 0, 0.029),
+  0 10px 80px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  color: white;
+}
+/* Changes LWC Card Background Color and Text color */
+:host {
+  --sds-c-card-color-background: #;
+  --slds-c-card-text-color: #;
+  --slds-c-card-color-border: transparent;
   
-  .tag {
-    font-size: 10px;
-    padding: 4px 8px;
-    border-radius: 20px;
-    
-    
+
+}
+
+  .slds-card__header{
+      
+      display: block;
+      border-width: 0;
   }
 
-  .approved {
-    background-color: var(--tag-color-one);
-    color: var(--tag-color-text-one);
-  }
+.left-bar {
+  background-color: var(--bg-color);
+  width: 230px;
+  border-right: 1px solid #e3e7f7;
+  position: relative;
+}
+
+.left-content { padding: 40px; }
+
+.home-svg{
+  display: block;
+  margin: 0 auto;
+  margin-top: 30%;
+  width: 100%;
+  height: 30px;
+}
+
+.item {
+
+  color: var(--main-color);
+  margin-bottom: 14px;
+  font-weight: 500;  
+}
+
+svg {
+  width: 14px;
+  height: 14px;
+  color: currentcolor;
+  margin-right: 10px;
+}
+
+.category-list{
+  margin-top: 50px;
   
-  .progress {
-    background-color: var(--tag-color-two);
-    color: var(--tag-color-text-two);
-  }
+ 
+} 
+
+.actions {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #fe4d46;
+  box-shadow: 14px 0 0 0 #fbc023, 28px 0 0 0 #7dd21f;
+}
+
+.circle-2 {
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  background-color: #d5d7e3;
+  box-shadow: -6px 0 0 0 #d5d7e3, 6px 0 0 0 #d5d7e3;
+}
+
+.right-bar {
+  width: 320px;
+  border-left: 1px solid #e3e7f7;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+}
   
-  .review {
-    background-color: var(--tag-color-three);
-    color: var(--tag-color-text-three);
-  }
-  
-  .waiting {
-    background-color: var(--tag-color-four);
-    color: var(--tag-color-text-four);
-  }
-  
-  .herobutton {
+  .header { 
+    font-size: 20px; 
+    color: #000;
    
-      border: 0px solid ;
-      color: #643131;
-      border-radius: 10px;
-      width: 100%;
-      height: 30px;
-      margin-top: 70px;
-      font-size: 20px;
-  background-color: #e4dcdc;
-    
+    margin-left: 30px;
   
+}
+
+.top-part {
+  padding: 30px;
+  display: flex; 
+  align-self: flex-end;
+   
+}
+
+svg {
+  width: 14px;
+  height: 14px;
+  color: var(--main-color);
+  margin-right: 14px;
+}
+
+.count {
+  font-size: 12px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  background-color: #623ce8;
+  color: #fff;
+ 
+  justify-content: center;
+}
+
+.right-content {
+  overflow-y: auto;
+  flex: 1;
+}
+.logout-box {
+  position: relative;
+  border-radius: 12px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px 0px rgba(235,235,235,1);
+  text-align: center;
+  color: #d5d7e3;
+  
+ 
+}
+ .logout-box:hover {
+    transform: scale(1.02);
   }
-  .herobutton:hover {
+.task-box {
+  position: relative;
+  border-radius: 12px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 16px;
+  /* cursor: pointer; */
+  box-shadow: 0px 0px 5px 0px rgba(235,235,235,1);
+  color: white;
+  
+  
+  
+}
+/* .task-box:hover {
+    transform: scale(1.02);
+  } */
+
+.time { margin-bottom: 6px; opacity: 0.4; font-size: 10px; }
+
+.profile-name { 
+  font-size: 14px; 
+  font-weight: 600;
+  padding-left: 20%;
+}
+.task-name { 
+  font-size: 14px; 
+  font-weight: 600;
+}
+
+.images{
+  border-radius: 12px;
+}
+
+.yellow { 
+  background-color: var(--box-color);
+}
+
+.blue { background-color: var(--box-color-2); }
+
+.red { background-color: var(--box-color-3); }
+
+.green { background-color: var(--box-color-4); }
+
+.more-button {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #8e92a4;
+  box-shadow: 0 -4px 0 0 #8e92a4, 0 4px 0 0 #8e92a4;
+  opacity: 0.4;
+  right: 20px;
+  top: 30px;
+  cursor: pointer;
+}
+
+.members {
+  display: flex;
+  margin-top: 14px;
+  
+}
+
+img {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 4px;
+  object-fit: cover;
+}
+
+.profile-content{
+  
+  background-color: #d2d0da;
+
+}
+.page-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 40px 20px 0 20px;
+  color: white;
+  
+  
+}
+
+.header { 
+  font-size: 26px; 
+  color: var(--main-color); 
+  margin-top: 30px;
+}
+
+.content-categories {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+}
+
+.nav-item { display: none; }
+
+.category { 
+  font-weight: 500; 
+  color: var(--secondary-color); 
+  
+  transition: .4s ease-in;
+  padding: 20px 30px;
+  cursor: pointer;
+}
+
+
+
+.task-item { display: none; }
+
+.tasks-wrapper {
+  padding: 30px 0;
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+  padding-right: 8px;
+}
+
+.task {
+  display: flex;
+  height: 170px;
+ background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
+ background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: bottom center;
+  border-radius: 12px;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 16px;
+  padding-left: 40px;
+  padding-top: 140px;
+  color: #ddd;
+  font-size: 13px;
+  font-weight: 500;
+  
+}
+  .task:hover {
+   transform: translateY(1px);
+    opacity: 0.8;
+  cursor: pointer;
+}
+  
+  label {
+    cursor: pointer;
+  }
+
+
+ label .label-text { position: relative; }
+
+ label .label-text:before {
+  content:'';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  left: -24px;
+  transition: .2s ease;
+}
+
+.task-item:checked + label .label-text:before {
+  background-color: var(--checkbox-color);
+  border: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: center;
+  border: 1px solid var(--checkbox-color);
+}
+
+.tag {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  
+  
+}
+
+.approved {
+  background-color: var(--tag-color-one);
+  color: var(--tag-color-text-one);
+}
+
+.progress {
+  background-color: var(--tag-color-two);
+  color: var(--tag-color-text-two);
+}
+
+.review {
+  background-color: var(--tag-color-three);
+  color: var(--tag-color-text-three);
+}
+
+.waiting {
+  background-color: var(--tag-color-four);
+  color: var(--tag-color-text-four);
+}
+
+.herobutton {
+ 
+    border: 0px solid ;
+    color: #643131;
+    border-radius: 10px;
+    width: 100%;
+    height: 30px;
+    margin-top: 70px;
+    font-size: 20px;
+background-color: #e4dcdc;
+  
+
+}
+.herobutton:hover {
+  
+    color: #9e7832;
+    background-color: #e7e2e2;
     
-      color: #9e7832;
-      background-color: #e7e2e2;
-      
+}
+
+.upcoming { 
+  border-bottom: 1px solid #ddd; 
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 900px) {
+  .left-bar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .task-manager {
+    flex-direction: column;
+    overflow-y: auto;
   }
   
-  .upcoming { 
-    border-bottom: 1px solid #ddd; 
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-  }
-  @media screen and (max-width: 900px) {
-    .left-bar {
-      display: none;
-    }
+  .right-bar, .page-content {
+    width: 100%;
+    display: block;
   }
   
-  @media screen and (max-width: 700px) {
-    .task-manager {
-      flex-direction: column;
-      overflow-y: auto;
-    }
-    
-    .right-bar, .page-content {
-      width: 100%;
-      display: block;
-    }
-    
-    .tasks-wrapper { height: auto; }
-  }
+  .tasks-wrapper { height: auto; }
+}
+
+@media screen and (max-width: 520px) {
+  .page-content { padding: 40px 10px 0 10px; }
   
-  @media screen and (max-width: 520px) {
-    .page-content { padding: 40px 10px 0 10px; }
-    
-    .right-content { padding: 10px 16px; }
-    
-    .category { padding: 20px; }
-  }
+  .right-content { padding: 10px 16px; }
+  
+  .category { padding: 20px; }
+}

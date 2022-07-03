@@ -45,7 +45,8 @@ export default class Exam extends LightningElement {
     passFail = 'failed';
     userAnswer;     //hold current user's answer and previous answer
 
-    multipleChoice = true;     //question type
+    multipleChoice = false;     //question type
+    multiSelect = true;
 
     apexWireId;     //variable wire for apex
 
@@ -67,6 +68,10 @@ export default class Exam extends LightningElement {
     setAnswer(event){
         //set the userAnswer from the current question
         this.userAnswer = event.target.value;
+        if (this.questionData.Question__r.Type__c == 'Multiple Select') {
+            this.userAnswer = this.userAnswer.toString();
+            this.userAnswer = this.userAnswer.replace(/,/g, ';');
+        }
         this.questionArray[this.position].picked = this.userAnswer;
         //determine what status the question should have
         if(this.questionArray[this.position].stat != 'review' || this.questionArray[this.position].stat != 'flagged'){
@@ -80,7 +85,13 @@ export default class Exam extends LightningElement {
         //when run should update current question information
         this.questionData = this.Examinfo[this.position];
         this.questionBody = this.questionData.Question__r.Body__c;
-
+        if (this.questionData.Question__r.Type__c == 'Multiple Select') {
+            this.multiSelect = true;
+            this.multipleChoice = false;
+        } else {
+            this.multiSelect = false;
+            this.multipleChoice = true;
+        }
     }
     //next button to navigate through questions
     next() {
@@ -186,7 +197,6 @@ export default class Exam extends LightningElement {
         //this is a weird timer. the parentThis is needed and i couldn't change it to the 'this' keyword also for some reason the date functions wouldn't work
         //so this is just generated without dates
         var parentThis = this;
-        //console.log(this.ExamTime);
         this.remainingTime = (this.ExamTime * 60) * 1000;
         // Run timer code in every 100 milliseconds
         this.countDownDate = setInterval(function() {
@@ -246,6 +256,12 @@ export default class Exam extends LightningElement {
                 { label: '', value: 'C' },
                 { label: '', value: 'D' },
             ];
+        }
+        if (this.questionData.Question__r.Type__c == 'True False') {
+            return [
+                { label: this.questionData.Question__r.Answer_A__c, value: 'A' },
+                { label: this.questionData.Question__r.Answer_B__c, value: 'B' },
+            ];          
         }
         return [
             { label: this.questionData.Question__r.Answer_A__c, value: 'A' },
@@ -320,6 +336,9 @@ export default class Exam extends LightningElement {
     //closes the exam in the main component
     close(){
         this.dispatchEvent(new CustomEvent ('close'));
+    }
+    connectedCallback() {
+        this.apexWireId = this.examid.examid;
     }
     //updates the question nav with the new status and inside quesiton nav it clears the old ones
     renderedCallback() {
