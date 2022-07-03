@@ -1,12 +1,20 @@
-
+.background-img{
+    background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: bottom center;
+}
 
 .container{
-    background-color: #c4c4c4;
+    /* background-color: #c4c4c4; */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     padding: 20px;
     gap: 10px;
+    backdrop-filter: blur(12px);
+    
+    
 }
 .card {
     border-radius: 10px;
