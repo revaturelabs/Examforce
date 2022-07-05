@@ -81,7 +81,7 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
         
             <!-- Flag / next / previous controls -->
             <div class="buttons">
-                <lightning-button variant="base" label="Flag" title="Flag" onclick={handleClick} class="flag"></lightning-button>
+                <lightning-button variant="base" label="Flag" title="Flag" onclick={switchIsFlagged} class="flag"></lightning-button>
                 <!-- <div class="flag">Flag</div> -->
                 <div class="controls"> 
                     <lightning-button variant="base" label="Previous" title="Previous" onclick={previous} class="control"></lightning-button>
@@ -99,7 +99,7 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
                     <div class="q">5</div> 
                     -->
                 </div>
-        
+                
                 <div class="key">
                     <div class="answered keyItem"> &nbsp;</div>Answered
                     <div class="unanswered keyItem">&nbsp;</div>Unanswered
@@ -109,6 +109,19 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
                 <lightning-button variant="base" label="Submit Exam" title="Submit Exam" onclick={checkQuestions} class="submit keyItem"></lightning-button>
             </div>
             </div>
+            <template if:true={isFlagged}>
+                <div class="dimmer"></div>
+                    <div class="card popUp">
+                        <lightning-card>
+                        <h1 class="slds-text-heading_large"><b>Flag Question</b></h1>
+                        <lightning-record-edit-form object-api-name="Case">
+                            <lightning-input-field field-name="Subject" value={flaggedQuestion} class="slds-hidden"></lightning-input-field>
+                            <lightning-input-field field-name="Description"></lightning-input-field>
+                            <lightning-button type="submit" label="Save" onclick={switchIsFlagged}> </lightning-button>
+                        </lightning-record-edit-form>
+                    </lightning-card>
+                    </div>
+                    </template>
             <template if:true={submitPopUp}>
                 <div class="dimmer"></div>
                 <div class="card popUp">

@@ -46,7 +46,8 @@ export default class Exam extends LightningElement {
     userAnswer;     //hold current user's answer and previous answer
 
     multipleChoice = false;     //question type
-    multiSelect = true;
+    multiSelect = false;
+    matching = true;
 
     apexWireId;     //variable wire for apex
 
@@ -68,14 +69,16 @@ export default class Exam extends LightningElement {
     setAnswer(event){
         //set the userAnswer from the current question
         this.userAnswer = event.target.value;
+        console.log(this.userAnswer);
         if (this.questionData.Question__r.Type__c == 'Multiple Select') {
             this.userAnswer = this.userAnswer.toString();
             this.userAnswer = this.userAnswer.replace(/,/g, ';');
         }
         this.questionArray[this.position].picked = this.userAnswer;
         //determine what status the question should have
-        if(this.questionArray[this.position].stat != 'review' || this.questionArray[this.position].stat != 'flagged'){
-            if(this.questionArray[this.position].stat = 'unanswered'){
+        if(this.questionArray[this.position].stat != 'review'){
+            console.log(this.questionArray[this.position].stat);
+            if(this.questionArray[this.position].stat == 'unanswered'){
                 this.questionArray[this.position].stat = 'answered';
             }
         }
@@ -88,9 +91,15 @@ export default class Exam extends LightningElement {
         if (this.questionData.Question__r.Type__c == 'Multiple Select') {
             this.multiSelect = true;
             this.multipleChoice = false;
+            this.matching = false;
+        } else if (this.questionData.Question__r.Type__c == 'Multiple Select'){
+            this.multiSelect = false;
+            this.multipleChoice = true;
+            this.matching = false;
         } else {
             this.multiSelect = false;
             this.multipleChoice = true;
+            this.matching = false;
         }
     }
     //next button to navigate through questions
@@ -240,6 +249,7 @@ export default class Exam extends LightningElement {
     }
     switchIsFlagged(){
         //toggles flag on and gets the question ID
+        console.log('flag');
         this.flaggedQuestion = this.questionData.Question__c;
         if(this.questionArray[this.position].stat != 'review'){
             this.questionArray[this.position].stat = 'flagged';
