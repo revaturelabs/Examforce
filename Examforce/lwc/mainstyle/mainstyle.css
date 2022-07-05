@@ -1,0 +1,178 @@
+.container{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    backdrop-filter: blur(12px);
+}
+.background-img{
+    background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: bottom center;
+        height: 100vh;
+}
+.title{
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    height: 100px;
+}
+.card {
+    border-radius: 10px;
+    background-color: #ffffff;
+    display: flex;
+    padding: 20px;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.17);
+}
+.timer {
+    justify-content: space-between;
+}
+.questionBody {
+    flex-direction: column;
+}
+.qTitle {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+.slds-button {
+    color: black !important;
+}
+.reviewButton {
+    border: 2px solid black;
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: #fcffd8;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.17);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flag {
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: #f7e4e3;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.17);
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+.controls {
+    display: flex;
+    gap: 10px;
+    padding: 20px 0;
+}
+.control {
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: #d1dbfe;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.17);
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+.questionDisplay {
+    display: flex;
+    flex-direction: column;
+}
+.list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 10px;
+    row-gap: 10px;
+}
+.navButton {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 5px;
+    background-color: #c4c4c4;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    gap: 10px;
+}
+.keyItem {
+    padding: 0 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.17);
+}
+.answered {
+    background-color: #d1dbfe;
+}
+.unanswered {
+    background-color: #c4c4c4;
+}
+.review {
+    background-color: #fcffd8;
+}
+.flagged {
+    background-color: #f7e4e3;
+}
+.submit {
+    background-color: #d5fec5;
+    border: 2px solid black;
+    cursor: pointer;
+    text-align: center;
+    align-self: flex-end;
+}
+.dimmer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0, 0.2);
+}
+.popUp {
+    position: absolute;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.popup ul {
+    text-align: center;
+}
+.popUp .submit {
+    align-self: center;
+}
+.submitControls {
+    display: flex;
+    gap: 20px;
+}
