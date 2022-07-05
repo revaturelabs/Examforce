@@ -25,12 +25,21 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
+        <members>Exam__c</members>
+        <members>Question__c</members>
+        <members>Question_Pool__c</members>
+        <members>Assigned_Exam__c</members>
+        <members>Answered_Question__c</members>
+        <members>Contact</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
         <members>*</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types>
+    </types> 
     <version>54.0</version>
 </Package>

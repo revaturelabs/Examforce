@@ -1,0 +1,18 @@
+<template>
+    <div>{question}</div>
+    <div class="answers">
+        <lightning-radio-group name="radioGroup"
+                                label="Radio Group"
+                                options="{ label: 'True', value: true },
+                                        { label: 'False', value: false }"
+                                value={userAnswer}
+                                type="radio"></lightning-radio-group>
+    </div>
+    <div class="testButton">
+        <lightning-button variant="base"
+        label="Base"
+        title="Console"
+        onclick={logToConsole}
+        class="slds-m-left_x-small"></lightning-button>
+    </div>
+</template>
