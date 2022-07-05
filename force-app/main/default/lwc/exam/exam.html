@@ -115,6 +115,7 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
                         <lightning-card>
                         <h1 class="slds-text-heading_large"><b>Flag Question</b></h1>
                         <lightning-record-edit-form object-api-name="Case">
+                            <!-- <lightning-input-field field-name="Category__c"></lightning-input-field> -->
                             <lightning-input-field field-name="Subject" value={flaggedQuestion} class="slds-hidden"></lightning-input-field>
                             <lightning-input-field field-name="Description"></lightning-input-field>
                             <lightning-button type="submit" label="Save" onclick={switchIsFlagged}> </lightning-button>
@@ -143,7 +144,7 @@ Description: To be rendered when AssignedExam is clicked, display questions asso
                     <ul>
                         <li>You scored</li>
                         <li>{totalScore}</li>
-                        <li>and passed/failed the exam</li>
+                        <li>and {passFail} the exam</li>
                     </ul>
                     <lightning-button variant="base" label="Close" title="Close" onclick={close} class="reviewButton"></lightning-button>
                 </div>

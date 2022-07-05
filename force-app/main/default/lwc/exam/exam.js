@@ -47,7 +47,9 @@ export default class Exam extends LightningElement {
 
     multipleChoice = false;     //question type
     multiSelect = false;
-    matching = true;
+    matching = false;
+
+    
 
     apexWireId;     //variable wire for apex
 
@@ -249,7 +251,6 @@ export default class Exam extends LightningElement {
     }
     switchIsFlagged(){
         //toggles flag on and gets the question ID
-        console.log('flag');
         this.flaggedQuestion = this.questionData.Question__c;
         if(this.questionArray[this.position].stat != 'review'){
             this.questionArray[this.position].stat = 'flagged';
