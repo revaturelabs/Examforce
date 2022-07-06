@@ -17,7 +17,7 @@ public without sharing class userHelper {
         try {
             String userEmail = UserInfo.getUserEmail();
             Contact con = [SELECT Id FROM Contact WHERE Email =: userEmail];
-            return [SELECT Id, Exam__r.Name, Exam__r.Duration__c, Exam__r.id FROM Assigned_Exam__c WHERE Assigned_Exam__c.contact__r.Id =: con.Id];
+            return [SELECT Id, Exam__r.Name, Exam__r.Duration__c, Exam__r.id,Score__c FROM Assigned_Exam__c WHERE Assigned_Exam__c.contact__r.Id =: con.Id];
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

@@ -94,10 +94,6 @@ export default class Exam extends LightningElement {
             this.multiSelect = true;
             this.multipleChoice = false;
             this.matching = false;
-        } else if (this.questionData.Question__r.Type__c == 'Multiple Select'){
-            this.multiSelect = false;
-            this.multipleChoice = true;
-            this.matching = false;
         } else {
             this.multiSelect = false;
             this.multipleChoice = true;

@@ -181,7 +181,12 @@ Description: To be called when a user is logged in to get all the exams that hav
                                                 <!-- <div class="task-name">{exam.Exam__r.Id}</div> -->
                                                 
                                             </div>
-                                            <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} name={exam.Exam__r.Name} duration={exam.Exam__r.Duration__c} assigned={exam.Id} onclick={startExam}></lightning-button>
+                                            <template if:true={exam.Score__c}>
+                                                <div class="task-name">Score: {exam.Score__c}</div>
+                                            </template>
+                                           <template if:false={exam.Score__c}>
+                                                 <lightning-button title="Start" label="Start" value={exam.Exam__r.Id} name={exam.Exam__r.Name}           duration={exam.Exam__r.Duration__c} assigned={exam.Id} onclick={startExam}></lightning-button>
+                                           </template>
     
     
                                         </div>
