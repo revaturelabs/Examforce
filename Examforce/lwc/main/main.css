@@ -68,7 +68,9 @@ button {
   /* max-width: 1200px; */
   /* height: 100%; */
   /* max-height: 900px; */
-  background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
+  background-color: #FF3CAC;
+  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+  
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom center;
@@ -88,7 +90,7 @@ button {
   --sds-c-card-color-background: #;
   --slds-c-card-text-color: #;
   --slds-c-card-color-border: transparent;
-  
+  --slds-text-link: #d5d7e3;
 
 }
 
@@ -211,6 +213,11 @@ svg {
   cursor: pointer;
   box-shadow: 0px 0px 3px 0px rgba(235,235,235,1);
   text-align: center;
+  color: #d5d7e3;
+  
+ 
+}
+.logout-box a{
   color: #d5d7e3;
   
  

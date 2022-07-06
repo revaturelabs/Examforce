@@ -7,7 +7,8 @@
     backdrop-filter: blur(12px);
 }
 .background-img{
-    background: url(https://images.hdqwalls.com/wallpapers/landscape-trees-mountains-clouds-digital-art-38.jpg);
+        background-color: #FF3CAC;
+        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);    
         background-repeat: no-repeat;
         background-size: cover;
         background-position: bottom center;
